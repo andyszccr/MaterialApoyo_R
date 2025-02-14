@@ -122,9 +122,85 @@ tiendas <- c("Libreria SJ","Libreria HE")
 
 tiendas <- c("Libreria SJ","Libreria HE")
 lineas_articulos <- c("Lapices","Cuadernos","Libros")
+# colocarle el nombre a las columnas
 colnames(oficina_matrix) <- tiendas
+#colcoar nombres a las filas
 rownames(oficina_matrix) <- lineas_articulos
 oficina_matrix
+
+# funcion para sumar la matriz.
+suma_filas<-rowSums(oficina_matrix)
+
+#sumar las columnas
+suma_columnas <-colSums(oficina_matrix)
+
+#------------------------------------------------------
+# funcion cbind 
+# agregar columnas a la matriz 
+
+new_oficinamatrix<- cbind(oficina_matrix,suma_filas)
+# rbind para agregar fila a la matriz
+new_oficinamatrix<- rbind(new_oficinamatrix,suma_columnas)
+
+print(oficina_matrix)
+print(sum(oficina_matrix[,"Libreria HE"]))
+
+print(colSums(oficina_matrix[,"Libreria HE"]))
+
+
+oficina_matrix[3,1]
+oficina_matrix["Libros","Libreria SJ"]
+oficina_matrix["Lapices",]
+
+#mostrar fila 3 y columna 2
+sum(oficina_matrix["Libros","Libreria HE"])
+
+print(oficina_matrix[1,1:2])
+print(oficina_matrix[1,1:2])
+
+#limpiar los datos
+#rm()
+
+
+genero_vector <- c("Male", "Female", "Female", "Male", "Male")
+estadocivil_status <- c("Single","Married","Divorced","Single","Single","Single","Married")
+factor_genero_vector <- factor(genero_vector)
+factor_estadocivil_status <- factor(estadocivil_status)
+
+#summary -> valor del genero vector 
+summary(factor_genero_vector)
+summary(factor_estadocivil_status)
+#categorizar no es numero
+
+#Construir valores con los niveles.
+genero_vector <- c("M", "F", "F", "M", "M")
+factor_genero_vector <- factor(genero_vector) 
+
+#recibe por parametro 
+levels(factor_genero_vector)<-c("Femenino", "Masculino")
+factor_genero_vector
+
+speed <-c("fast","slow","slow","fast","insane")
+speed_vector<-factor(speed,ordered = TRUE,levels = c("slow","fast","insane"))
+
+summary(genero_vector)
+summary(factor_genero_vector)
+#-------------------
+# puedes combinar cualquier cantidad de datos.
+# puedo gran cantidad de datos como una base de datos
+# en vez columnas -> variables o atributos
+# en vez de filas -> observaciones 
+# esversatil
+# Buscando un set de datos -> aviacion
+#----------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
