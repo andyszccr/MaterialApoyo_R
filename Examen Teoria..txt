@@ -1,0 +1,20 @@
+5.Explique que es cluster contiguo (nearest neighbour) y de dos ejemplos (3 pts.)
+
+Es un conjunto de puntos que es más similar a uno o más puntos en el cluster con respecto
+a otros, como por ejemplo : 
+1.La Base de datos de alumnos mas entre sí que los alumnos de Turismo
+2.La Base de datos de los ciudadanos de una provincia más que los ciudadanos de Costa Rica.
+
+
+6.¿Qué es la apofenia y en que podría afectar en un análisis de clustering? (2 pts.)
+
+Es emitir un criterio basado en  experiencias, no en el análisis, afecta de una manera errona, en que podemos tener patrones o datos sin sentido, tal como por ejemplo un grafico de agrupación de colores y vemos que varios estudiantes dicen que hay un total de 12, otros estudiantes 15 y otras personas que 11.  
+
+7.¿Cuál es la diferencia entre un vector y una matriz (2 pts.)
+
+La diferencia es que un vector es un arreglo lineal de valores de un mismo tipo que se definen con esta función "c()" y la matriz es un arreglo de dimensiones, es decir, fila y columna, siendo sus valores del mismo tipo.
+
+8.¿Que es un vector de tipo factor (2 pt) 
+
+Un vector de tipo factor es el vector de una variable de tipo nominal categorica, el cual,
+contiene un cierto orden y por lo tanto no se puede indicar cual categoría vale más que la otra. 
