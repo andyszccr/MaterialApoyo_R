@@ -6,10 +6,56 @@
 # Documentacion del proyecto
 En este repositorio encontrarás todo lo relacionado a la documentación en R, tanto documentos, como material de apoyo, entre otros....
 
-1. Instalación de paquete llamado Tidyverse install.packages('titanic')
+# Ventajas y desventajas Arboles de decision
+
+Ventajas 
+
+- Fáciles de entender e interpretar:
+Los árboles de decisión son modelos visuales y intuitivos. Las reglas de decisión pueden representarse gráficamente, lo que los hace accesibles incluso para personas sin experiencia en machine learning.
+- Manejan datos numéricos y categóricos:
+Pueden trabajar con ambos tipos de datos sin necesidad de preprocesamiento extensivo (aunque algunos algoritmos como ID3 solo manejan categóricos).
+- No requieren normalización o escalado de datos:
+A diferencia de otros algoritmos (como SVM o KNN), los árboles de decisión no son sensibles a la escala de los datos.
+- Automáticamente seleccionan características importantes:
+Durante la construcción del árbol, se identifican las características más relevantes para la predicción, lo que ayuda a reducir la dimensionalidad.
+- Robustos a valores faltantes:
+Algunas implementaciones (como CART) pueden manejar datos incompletos o valores faltantes.
+
+Eficientes computacionalmente:
+
+Una vez entrenados, los árboles de decisión son rápidos para hacer predicciones, incluso con conjuntos de datos grandes.
+
+Útiles para problemas de clasificación y regresión:
+
+Algoritmos como CART pueden usarse tanto para predecir categorías como valores numéricos.
+
+No asumen una distribución específica de los datos:
+
+Los árboles de decisión no requieren que los datos sigan una distribución estadística particular (por ejemplo, normal).
+
+Desventajas 
+
+- Propensos al sobreajuste (overfitting):
+Los árboles de decisión tienden a crear reglas muy específicas para los datos de entrenamiento, lo que puede resultar en un mal desempeño con datos nuevos. Esto es especialmente cierto si el árbol es muy profundo.
+- Inestables ante pequeños cambios en los datos:
+- Pequeñas variaciones en los datos de entrenamiento pueden generar árboles completamente diferentes, lo que afecta su generalización.
+Sesgo hacia características con más niveles:
+- Los algoritmos como CART tienden a favorecer características con más niveles o categorías, lo que puede no ser siempre deseable.
+Dificultad para capturar relaciones complejas:
+- Los árboles de decisión no son adecuados para modelar relaciones no lineales o interacciones complejas entre variables.
+Limitaciones en la extrapolación:
+No son buenos para hacer predicciones fuera del rango de los datos de entrenamiento, especialmente en problemas de regresión.
+- Costoso en términos de memoria para árboles grandes:
+Los árboles muy grandes pueden consumir mucha memoria y volverse difíciles de manejar.
+- Dependencia de la métrica de división:
+La elección de la métrica (por ejemplo, Gini, entropía) puede afectar el rendimiento del modelo.
+- No son óptimos para datos desbalanceados:
+Si una clase es mucho más frecuente que otra, el árbol puede sesgarse hacia la clase mayoritaria.
+
+# Instalación de paquete llamado Tidyverse install.packages('titanic')
 ![image](https://github.com/user-attachments/assets/0961f8fc-9d99-4b97-bf63-c1a9ffd71393)
 
-2. Busqueda de dataset llamado Titanic_train
+# Busqueda de dataset llamado Titanic_train
 ![image](https://github.com/user-attachments/assets/851927bc-69d4-4dd7-bc87-cac649bb889f)
 
 
