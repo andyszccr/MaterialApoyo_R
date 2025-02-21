@@ -32,8 +32,8 @@ El algoritmo de Hunt, desarrollado en la década de 1960 para modelar el aprendi
 [03  Arbol de desición Titanic para usar.txt](https://github.com/user-attachments/files/18901059/03.Arbol.de.desicion.Titanic.para.usar.txt)
 
 # Referencias 
-[Arboles de decisión IBM](https://www.ibm.com/mx-es/think/topics/decision-trees)
-[Arboles de decisión Conectasoftware](https://www.conectasoftware.com/magazine/arboles-de-decisiones-en-la-mineria-de-datos)
-[Ejercicio de R](https://www.youtube.com/watch?v=m1prEGQ-1As&t=1s)
+- [Arboles de decisión IBM](https://www.ibm.com/mx-es/think/topics/decision-trees)
+- [Arboles de decisión Conectasoftware](https://www.conectasoftware.com/magazine/arboles-de-decisiones-en-la-mineria-de-datos)
+- [Ejercicio de R](https://www.youtube.com/watch?v=m1prEGQ-1As&t=1s)
 
 
