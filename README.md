@@ -20,17 +20,11 @@ A diferencia de otros algoritmos (como SVM o KNN), los árboles de decisión no 
 Durante la construcción del árbol, se identifican las características más relevantes para la predicción, lo que ayuda a reducir la dimensionalidad.
 - Robustos a valores faltantes:
 Algunas implementaciones (como CART) pueden manejar datos incompletos o valores faltantes.
-
-Eficientes computacionalmente:
-
+- Eficientes computacionalmente:
 Una vez entrenados, los árboles de decisión son rápidos para hacer predicciones, incluso con conjuntos de datos grandes.
-
-Útiles para problemas de clasificación y regresión:
-
+- Útiles para problemas de clasificación y regresión:
 Algoritmos como CART pueden usarse tanto para predecir categorías como valores numéricos.
-
-No asumen una distribución específica de los datos:
-
+- No asumen una distribución específica de los datos:
 Los árboles de decisión no requieren que los datos sigan una distribución estadística particular (por ejemplo, normal).
 
 Desventajas 
