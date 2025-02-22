@@ -1,8 +1,10 @@
 #Instalar paquetes en consola
 #install.packages("tidyverse")
-install.packages('titanic')
+#install.packages('titanic')
 
 #colocar las librerias en el script
+# para manipular datos 
+# realizar operaciones como filtrado, agrupacion
 library(tidyverse)
 library(titanic)
 
@@ -35,6 +37,7 @@ fancyRpartPlot(arbol)
 
 #Prediccion si pasajero vivio o murio
 predarbol<-predict(arbol,type = 'class')
+#combinamos el arbol
 titanic_pred <-cbind(titanic_train, predarbol)
 
 #Predecir si una persona de 4 años sobrevivio
