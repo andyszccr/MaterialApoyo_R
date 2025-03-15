@@ -401,7 +401,7 @@ head(arrange(mtcars,hp))
 head(arrange(mtcars,wt))
 
 #Extraer el header de los registros ordenados por hp de manera descendente 
-head(arrange(mtcars,desc(hp)),50)
+head(arrange(mtcars,desc(hp)))
 
 #Ordenar los registros mediante cilindros(cyl) y millas por galon(mpg)
 arrange(mtcars, cyl, mpg)
@@ -409,7 +409,7 @@ arrange(mtcars, cyl, mpg)
 #Ordenar los registros de manera descendente en 2 columnas
 head(arrange(mtcars, desc(cyl), desc(mpg)))
 
-
+max(mtcars)
 #mutate
 #Copiar la columna con un nuevo nombre
 mutate(mtcars,horsepw = hp)
@@ -428,6 +428,7 @@ mtcars2 <- mutate(mtcars, hp_to_wt = hp/wt)
 
 #summarise
 #Ejecutar ciertas funciones sobre el df indicado
+#funciones de estaditisca basica
 summarise(mtcars, mean_weight = mean(wt), 
           max_milepergallon = max(mpg), 
           min_cylinder = min(cyl))
@@ -460,9 +461,11 @@ mtcars %>%
   summarise(maxhp = max(hp))
 
 #Calcule el promedio de caballos de fuerza (hp) y las mpg, entre los vehiculos de 8 cilindros (cyl)
-mtcars %>%
+mtcars %>% 
   filter(cyl==8) %>%
   summarise(meanhp = mean(hp),meanmpg = mean(mpg))
+
+max(select(filter(mtcars, cyl == 8), cyl))
 
 
 #Calcule  el total de vehiculos por categoria de cilindros (cyl) y ordene la lista de mayor a menor
