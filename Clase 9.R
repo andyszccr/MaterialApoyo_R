@@ -46,7 +46,10 @@ df<-mlb %>%
   summarise(cant=n(),
             planilla=sum(salary),
             salario_promedio=mean(salary),
-            .groups = "keep")
+            .groups = "drop") %>% 
+  print(n=nrow(.))
+
+
 
 
 data("births")
