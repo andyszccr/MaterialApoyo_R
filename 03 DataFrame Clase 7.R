@@ -1,7 +1,7 @@
 # Clase 7 Manejo de Datos dataframe
 ####################################
 
-#invoicar 
+#invocar la data de mtcars
 mtcars
 
 #dimension de un data frame
@@ -36,11 +36,13 @@ vehic_manuales<-mtcars[mtcars$am==1,]
 #Genere otro con los automaticos nombrelo 
 vehic_autom <- mtcars[mtcars$am==0,]
 
+
+
 #Indique de los vehiculos manuales  cual tiene más 
 max(vehic_manuales,mtcars$hp)
 
 #Indique de los vehiculos manuales  cual tiene más 
-vehic_manuales<-max(vehic_manuales$hp)
+vehic_manuales2<-max(vehic_manuales$hp)
 
 max_hp<-max(vehic_manuales[,4])
 
@@ -64,5 +66,10 @@ maxlg<-vehic_autom[vehic_autom$mpg==max_mpg,]
 vehic_manuales<-mtcars[mtcars$am==1,]
 min_vm<-min(vehic_manuales$mpg)
 min_cm<-vehic_manuales[vehic_manuales$mpg==min_vm,]
+
+
+
+
+
 
 
