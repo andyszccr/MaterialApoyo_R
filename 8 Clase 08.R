@@ -489,3 +489,22 @@ mtcars %>%
   group_by(cyl, am) %>% 
   summarise(mn = mean(mpg))
 
+
+
+# Vector original
+vector <- c(-9, 37, -10, 26, -13, 30, 15, 35, -16, -18, -1, 34, -17, 25, 36, -6, 14, 34, -17, 14, 
+            19, -5, 26, 35, 17, 37, 0, -6, 11, -3, 23, 37, 25, 15, -12, 19, 24, -10, -4, -6, 22, -4, 
+            -10, 16, -7, 0, 6, 5, -3, -7)
+
+# Calculamos el cuadrado de cada número
+cuadrados <- vector^2
+
+# Filtramos los valores mayores a 200
+mayores_200 <- vector[cuadrados > 200]
+
+# Imprimimos resultados
+print("Cuadrados de los números:")
+print(cuadrados)
+
+print("Números cuyo cuadrado es mayor a 200:")
+print(mayores_200)

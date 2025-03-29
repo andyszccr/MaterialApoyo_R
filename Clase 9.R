@@ -44,12 +44,11 @@ mlb %>%
 df<-mlb %>%
   group_by(position,team) %>% 
   summarise(cant=n(),
-            planilla=sum(salary),
+            Monto_Total_=sum(salary),
             salario_promedio=mean(salary),
             .groups = "keep") 
 
 print(df,n= nrow(df))
-
 
 
 
@@ -65,7 +64,6 @@ head(births, 20)
 #7-cuenta la cantidad de nacimiento por edad padre y de la madre
 
 #8-Genere el total de visitas y el peso promedio para los nacimientos por genero y estado prematuro
-
 
 #9-Cuente la cantidad de nacimientos por semana de acuerdo a si son fumadores o no fumadores
 
