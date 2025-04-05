@@ -43,7 +43,8 @@ census_long
 census_wide2 <- unite(census_wide,fulldate,YEAR,month,sep="-")
 
 #Utilice la funcin separate() para separar 2 columnas
-census_wide2 <- separate(census_wide2,col=fulldate,into=c("year","month"),sep="-")
+census_wide2 <- separate(census_wide2,
+                         col=fulldate,into=c("year","month"),sep="-")
 
 
 
@@ -115,7 +116,7 @@ glimpse(datos_fecha2)
 
 Sys.getlocale("LC_TIME")
 
-this_day <- today()
+this_day <- today() 
 
 y <- year(this_day)
 m <- month(this_day)
@@ -134,7 +135,8 @@ y <- yday(this_day)
 str_trim(c("   Filip ", "Nick  ", " Jonathan"))
 
 # Ajustar string agregando ceros
-str_pad(c("23485W", "8823453Q", "994Z"),width = 9, side = "left", pad = "-")
+str_pad(c("23485W", "8823453Q", "994Z"),
+        width = 9, side = "left", pad = "-")
 
 # Funciones toupper y tolower
 codigo_provincias = c("sj","al","he","ca","li","pu","gu")
