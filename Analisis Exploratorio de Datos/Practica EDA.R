@@ -145,10 +145,7 @@ gap2007 %>%
   summarize(mean(lifeExp),
             median(lifeExp))
 
-gap2007 %>%
-  ggplot(aes(x = continent, y = lifeExp)) +
-  geom_boxplot()
-
+ 
 
 
 
