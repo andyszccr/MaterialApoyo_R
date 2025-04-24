@@ -1,6 +1,6 @@
 #Instalar paquetes en consola
-#install.packages("tidyverse")
-#install.packages('titanic')
+install.packages("tidyverse")
+install.packages('titanic')
 
 #colocar las librerias en el script
 # para manipular datos 
@@ -17,8 +17,10 @@ head(titanic_train)
 # hacer los calculos
 library(rpart)
 # se utiliza para la parte grafica
+install.packages('rattle')
 library(rattle)
 # tambien se usa para la parte grafica
+install.packages('rpart.plot')
 library(rpart.plot)
 
 #Modelado de arbol decision
