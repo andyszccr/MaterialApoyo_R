@@ -1,0 +1,95 @@
+# Análisis de Datos de Miembros de Gimnasio
+
+## Introducción
+
+El presente documento tiene como objetivo analizar los datos de miembros de un gimnasio para identificar patrones, tendencias y relaciones significativas que puedan ayudar en la toma de decisiones estratégicas. El análisis se centra en comprender el comportamiento de los usuarios, sus preferencias de entrenamiento y las relaciones entre diferentes variables relacionadas con el ejercicio físico.
+
+El conjunto de datos analizado contiene información detallada sobre los miembros del gimnasio, incluyendo variables demográficas, métricas de salud, tipos de entrenamiento y resultados de ejercicio. Este análisis es fundamental para:
+
+1. Optimizar la oferta de servicios del gimnasio
+2. Personalizar los programas de entrenamiento
+3. Mejorar la experiencia del usuario
+4. Identificar oportunidades de negocio
+
+## Metodología
+
+El análisis se realizó utilizando el lenguaje de programación R, aplicando diversas técnicas estadísticas y de visualización de datos. El proceso incluyó:
+
+1. Limpieza y preparación de datos
+2. Análisis estadístico descriptivo
+3. Identificación de correlaciones
+4. Detección de valores atípicos
+5. Aplicación de algoritmos de clustering y regresión
+
+## Hipótesis de Investigación
+
+Se plantearon tres hipótesis principales para guiar el análisis:
+
+1. **Hipótesis 1**: Existe una relación positiva entre la duración del entrenamiento y las calorías quemadas.
+2. **Hipótesis 2**: El tipo de ejercicio está relacionado con la frecuencia de entrenamiento de los miembros.
+3. **Hipótesis 3**: El Índice de Masa Corporal (IMC) está relacionado con la frecuencia de entrenamiento.
+
+## Resultados y Análisis
+
+### Estadísticas Descriptivas
+
+El análisis de las estadísticas básicas reveló información importante sobre la población del gimnasio:
+
+- **Edad**: La edad promedio de los miembros es de [valor] años, con una moda de [valor] años.
+- **IMC**: El índice de masa corporal promedio es de [valor].
+- **Calorías Quemadas**: En promedio, los miembros queman [valor] calorías por sesión.
+- **Duración de Sesión**: La duración promedio de las sesiones de entrenamiento es de [valor] horas.
+
+### Correlaciones Identificadas
+
+1. **Duración del Entrenamiento vs Calorías Quemadas**:
+   - Se encontró una correlación positiva de [valor]
+   - Esto indica que a mayor tiempo de entrenamiento, mayor es la quema de calorías
+
+2. **IMC vs Frecuencia de Entrenamiento**:
+   - La correlación encontrada fue de [valor]
+   - Esto sugiere que [interpretación]
+
+### Valores Atípicos
+
+El análisis de boxplots reveló la presencia de valores atípicos en:
+
+1. **IMC**: [descripción de los outliers]
+2. **Calorías Quemadas**: [descripción de los outliers]
+
+### Análisis de Clustering
+
+La aplicación del algoritmo K-means permitió identificar [número] grupos distintos de miembros basados en:
+- IMC
+- Calorías quemadas
+- Duración de la sesión
+
+### Modelo de Regresión Lineal
+
+El modelo de regresión lineal aplicado mostró que:
+- [Variable] es el predictor más significativo de las calorías quemadas
+- El modelo explica [valor]% de la variabilidad en las calorías quemadas
+
+## Conclusiones y Recomendaciones
+
+Basado en los resultados del análisis, se pueden formular las siguientes recomendaciones:
+
+1. [Recomendación 1]
+2. [Recomendación 2]
+3. [Recomendación 3]
+
+## Limitaciones del Estudio
+
+1. [Limitación 1]
+2. [Limitación 2]
+3. [Limitación 3]
+
+## Anexos
+
+### Gráficos y Visualizaciones
+
+[Incluir los gráficos generados en el análisis]
+
+### Código Utilizado
+
+[Incluir el código R utilizado para el análisis] 

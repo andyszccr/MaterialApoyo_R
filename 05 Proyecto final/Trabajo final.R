@@ -113,7 +113,12 @@ summary(gym_cuc)
 #Aplicación del algoritmo regresión lineal simple con las variables Calories_Burned y Session_Duration..hours
 modelo_rg <- lm(Calories_Burned ~ Session_Duration..hours., data = gym_cuc) #lo que pretende el modelo es encontrar una relación entre el la quema de calorías y el tiempo en horas que dura la sesión de entranamiento.
 summary(gym_cuc)
-ggplot(gym_cuc, aes(x = Session_Duration..hours., y = Calories_Burned)) + geom_point(alpha = 0.3, color = "green") + geom_smooth(method = "lm", color = "red", se = TRUE) +  labs(title = "Regresión lineal de la duración en horas de sesión y las calorías quemadas",  x = "Duración en horas sesión", y = "Calorías quemadas")
+ggplot(gym_cuc, 
+       aes(x = Session_Duration..hours., y = Calories_Burned)) 
++ geom_point(alpha = 0.3, color = "green") 
++ geom_smooth(method = "lm", color = "red", se = TRUE) 
++  labs(title = "Regresión lineal de la duración en horas de sesión y las calorías quemadas",  
+        x = "Duración en horas sesión", y = "Calorías quemadas")
 
 
 
