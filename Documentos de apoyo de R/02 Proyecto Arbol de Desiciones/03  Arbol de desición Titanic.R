@@ -1,36 +1,57 @@
-#Instalar paquetes en consola
+# ==============================================================================
+# SCRIPT: Árbol de Decisión - Análisis de Supervivencia del Titanic
+# AUTOR: Material de Apoyo R
+# FECHA: 2025
+# DESCRIPCIÓN: Este script implementa un árbol de decisión para predecir la
+#              supervivencia de los pasajeros del Titanic usando variables como
+#              sexo y edad. Incluye visualización del árbol y predicciones.
+# ==============================================================================
+
+# ==============================================================================
+# SECCIÓN 1: INSTALACIÓN Y CARGA DE LIBRERÍAS
+# ==============================================================================
+
+# Instalar paquetes necesarios (ejecutar solo si no están instalados)
 install.packages("tidyverse")
 install.packages('titanic')
 
-#colocar las librerias en el script
-# para manipular datos 
-# realizar operaciones como filtrado, agrupacion
-library(tidyverse)
-library(titanic)
+# Cargar librerías para manipulación de datos y análisis
+library(tidyverse)  # Para manipulación de datos (dplyr, tidyr, etc.)
+library(titanic)    # Dataset del Titanic
 
-#Cargar libreria de datos
+# ==============================================================================
+# SECCIÓN 2: CARGA Y EXPLORACIÓN DE DATOS
+# ==============================================================================
+
+# Cargar el dataset de entrenamiento del Titanic
 data("titanic_train")
-#Teclear la funcion para ser mostrados en consola de forma ordenada.
+
+# Mostrar las primeras filas del dataset
 head(titanic_train)
 
-#cargar librerias por clasficacion para hacer el arbol
-# hacer los calculos
-library(rpart)
-# se utiliza para la parte grafica
-install.packages('rattle')
+# ==============================================================================
+# SECCIÓN 3: CONFIGURACIÓN PARA ÁRBOLES DE DECISIÓN
+# ==============================================================================
+
+# Instalar y cargar librerías específicas para árboles de decisión
+library(rpart)      # Para crear árboles de decisión
+install.packages('rattle')      # Para visualización avanzada
 library(rattle)
-# tambien se usa para la parte grafica
-install.packages('rpart.plot')
+install.packages('rpart.plot')  # Para gráficos del árbol
 library(rpart.plot)
 
-#Modelado de arbol decision
-#no es 100% exacto por un margen de error
-arbol<-rpart( 
-  #Formula para ver cual pasajer sobrevivio, genero y edad
+# ==============================================================================
+# SECCIÓN 4: CONSTRUCCIÓN DEL ÁRBOL DE DECISIÓN
+# ==============================================================================
+
+# Crear el modelo de árbol de decisión
+# NOTA: Los árboles de decisión no son 100% exactos, tienen un margen de error
+arbol <- rpart(
+  # Fórmula: predecir supervivencia basada en sexo y edad
   formula = Survived ~ Sex + Age,
-  #Datos de qonde los voy a extraer
+  # Dataset de donde extraer los datos
   data = titanic_train,
-  #conocer el valor que nos da
+  # Método de clasificación (no regresión)
   method = 'class'
 )
 

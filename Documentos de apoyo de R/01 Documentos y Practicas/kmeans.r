@@ -1,6 +1,18 @@
-#Cargar y utilizar función IPAK
-#ver vídeo https://www.youtube.com/watch?v=UjQz9SxG9rk
+# ==============================================================================
+# SCRIPT: Análisis de Clustering con K-means
+# AUTOR: Material de Apoyo R
+# FECHA: 2025
+# DESCRIPCIÓN: Este script implementa análisis de clustering usando el algoritmo
+#              K-means con el dataset USArrests. Incluye normalización de datos,
+#              estimación del número óptimo de clusters y visualización de resultados.
+# REFERENCIA: https://www.youtube.com/watch?v=UjQz9SxG9rk
+# ==============================================================================
 
+# ==============================================================================
+# SECCIÓN 1: CONFIGURACIÓN Y CARGA DE LIBRERÍAS
+# ==============================================================================
+
+# Función personalizada para instalar y cargar paquetes automáticamente
 ipak <- function(pkg){
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg)) 
@@ -8,22 +20,39 @@ ipak <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 
-packages <- c("tidyverse","cluster", "factoextra","NbClust","tidyr")
+# Lista de paquetes necesarios para el análisis
+packages <- c("tidyverse", "cluster", "factoextra", "NbClust", "tidyr")
 ipak(packages)
 
+# ==============================================================================
+# SECCIÓN 2: CARGA Y PREPARACIÓN DE DATOS
+# ==============================================================================
+
+# Cargar el dataset USArrests (datos de arrestos por estado en USA)
 df <- USArrests
 df
 
-#normalizar las puntuaciones
-#La escala es la normalización de un conjunto de datos utilizando el valor medio y la desviación estándar."
+# Normalizar los datos usando escala estandarizada (z-score)
+# La escala estandariza los datos usando la media y desviación estándar
+# Fórmula: (x - media) / desviación_estándar
 df <- scale(df)
 head(df)
 
-#calcular la matriz de distacias
-m.distancia <- get_dist(df, method = "euclidean") #el método aceptado también puede ser: "maximum", "manhattan", "canberra", "binary", "minkowski", "pearson", "spearman" o "kendall"
+# ==============================================================================
+# SECCIÓN 3: ANÁLISIS DE DISTANCIAS
+# ==============================================================================
+
+# Calcular la matriz de distancias usando distancia euclidiana
+# Métodos disponibles: "maximum", "manhattan", "canberra", "binary", 
+# "minkowski", "pearson", "spearman", "kendall"
+m.distancia <- get_dist(df, method = "euclidean")
+
+# Visualizar la matriz de distancias
+# Colores: azul (baja distancia), blanco (media), rojo (alta distancia)
 fviz_dist(m.distancia, gradient = list(low = "blue", mid = "white", high = "red"))
 
-#euclidean = El algoritmo de Euclides es un método para calcular el máximo común divisor (MCD) de dos números enteros. También se le conoce como "método de las divisiones sucesivas.
+# NOTA: La distancia euclidiana es la distancia en línea recta entre dos puntos
+# en un espacio multidimensional
 
 
 

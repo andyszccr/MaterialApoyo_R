@@ -1,33 +1,46 @@
-# Clase 7 Manejo de Datos dataframe
-####################################
+# ==============================================================================
+# SCRIPT: Manejo de DataFrames - Clase 7
+# AUTOR: Material de Apoyo R
+# FECHA: 2025
+# DESCRIPCIÓN: Este script enseña las operaciones básicas con DataFrames en R
+#              usando el dataset mtcars. Incluye exploración, filtrado y 
+#              manipulación de datos tabulares.
+# ==============================================================================
 
-#invocar la data de mtcars
+# ==============================================================================
+# SECCIÓN 1: EXPLORACIÓN BÁSICA DEL DATAFRAME
+# ==============================================================================
+
+# Cargar el dataset mtcars (datos de automóviles de 1974)
 mtcars
 
-#dimension de un data frame
+# Obtener las dimensiones del DataFrame (filas, columnas)
 dim(mtcars)
 
-#mostrar los primeros ejercicios
-head(mtcars,5)
+# Mostrar los primeros 5 registros
+head(mtcars, 5)
 
-#ultimos 5  registros
-tail(mtcars,5)
+# Mostrar los últimos 5 registros
+tail(mtcars, 5)
 
-#Tipo de valor o clase que es.
-#mustra la estructura del datafram
+# Mostrar la estructura del DataFrame (tipos de datos, columnas, etc.)
 str(mtcars)
 
-#resumen del dataframe
+# Obtener resumen estadístico del DataFrame
 summary(mtcars)
 
-#Crear una tabla 
+# ==============================================================================
+# SECCIÓN 2: ANÁLISIS Y FILTRADO DE DATOS
+# ==============================================================================
+
+# Crear una tabla de frecuencias para la variable cyl (cilindros)
 table(mtcars$cyl) 
 
-mtcars[mtcars$cyl==4,]
+# Filtrar vehículos con 4 cilindros
+mtcars[mtcars$cyl == 4, ]
 
-
-# vehiculos que tienen cilindraje 8
-mtcars[mtcars$cyl==8,]
+# Filtrar vehículos con 8 cilindros
+mtcars[mtcars$cyl == 8, ]
 
 
 #nombrelo los manuales

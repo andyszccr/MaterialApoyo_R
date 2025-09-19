@@ -1,46 +1,66 @@
-#Calculadorq en R
-#Suma 
-5+5
+# ==============================================================================
+# SCRIPT: Ejercicios Básicos de R - Fundamentos del Lenguaje
+# AUTOR: Material de Apoyo R
+# FECHA: 2025
+# DESCRIPCIÓN: Este script contiene ejercicios básicos para aprender los 
+#              fundamentos del lenguaje de programación R, incluyendo operaciones
+#              aritméticas, variables, vectores, matrices y factores.
+# ==============================================================================
 
-#Resta
-5-5
+# ==============================================================================
+# SECCIÓN 1: OPERACIONES ARITMÉTICAS BÁSICAS
+# ==============================================================================
 
-#multiplicacion
-5*5
+# Suma básica
+5 + 5
 
-#division
-(5+5)/2
+# Resta básica
+5 - 5
 
-#Potencia
+# Multiplicación básica
+5 * 5
+
+# División con paréntesis para orden de operaciones
+(5 + 5) / 2
+
+# Potencia (elevar a un exponente)
 5^2
 
-#modulo 
-28%%6
-#
-#Declariarcion de variables 
+# Módulo (resto de la división)
+28 %% 6
 
-var_numerico<-42
+# ==============================================================================
+# SECCIÓN 2: DECLARACIÓN Y MANEJO DE VARIABLES
+# ============================================================================== 
 
-nombre<-'Andrey'
-nombre2<-"luis" # solo uno
+# Declaración de variable numérica
+var_numerico <- 42
 
-#Verifica el tipo de variable 
+# Declaración de variables de texto (strings)
+# Se puede usar comillas simples o dobles
+nombre <- 'Andrey'
+nombre2 <- "luis"  # Ambas sintaxis son válidas
+
+# Verificar el tipo de variable usando class()
 class(nombre)
 
-#Declaracion de Vectores 
-ventas_lapices<-c(140,98,121,201,213)
-ventas_cuadernos<-c(118,73,88,101,99)
+# ==============================================================================
+# SECCIÓN 3: TRABAJO CON VECTORES
+# ============================================================================== 
+# Crear vectores numéricos con datos de ventas
+ventas_lapices <- c(140, 98, 121, 201, 213)
+ventas_cuadernos <- c(118, 73, 88, 101, 99)
 
-lapices<-c('Lunes','Martes','Miercoles','Jueves','Viernes')
-lapices2<-c("Lunes","Martes","Miercoles","Jueves","Viernes")
+# Crear vectores de texto con nombres de días
+lapices <- c('Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes')
+lapices2 <- c("Lunes", "Martes", "Miercoles", "Jueves", "Viernes")
 
-#Asignar un vector de otro
-names(ventas_lapices)<-lapices
+# Asignar nombres a los vectores usando names()
+names(ventas_lapices) <- lapices
 ventas_lapices
 
-
-#asigna 
-names(ventas_cuadernos)<-lapices2
+# Asignar nombres al segundo vector
+names(ventas_cuadernos) <- lapices2
 ventas_cuadernos
 
 sum(ventas_cuadernos)

@@ -1,32 +1,61 @@
-# Cargar las librerías necesarias
-library(tidyverse)
-library(ggplot2)
-library(boot)
-library(car)
-library(QuantPsyc)
-library(NbClust)
-library(factoextra)
-library(mvtnorm)
-library(dendextend)
-library(dplyr)
-library(plotly)
-library(mice)
-library(gapminder)
-library(rpart)
-library(aplpack)
-library(corrplot)
-library(sm)
-#install.packages('modeest')
-library(modeest)  # Para la función mfv
+# ==============================================================================
+# SCRIPT: Proyecto Final - Análisis de Datos de Gimnasio
+# AUTOR: Material de Apoyo R
+# FECHA: 2025
+# DESCRIPCIÓN: Este script realiza un análisis completo de datos de seguimiento
+#              de ejercicios en gimnasio, incluyendo análisis exploratorio,
+#              correlaciones, estadísticas descriptivas y visualizaciones.
+# OBJETIVOS: Analizar patrones en el comportamiento de ejercicio, correlaciones
+#            entre variables y generar insights para el negocio del gimnasio.
+# ==============================================================================
 
-# 1. Cargar y preparar los datos
+# ==============================================================================
+# SECCIÓN 1: CARGA DE LIBRERÍAS
+# ==============================================================================
+
+# Cargar librerías principales
+library(tidyverse)  # Manipulación y visualización de datos
+library(ggplot2)    # Gramática de gráficos
+library(dplyr)      # Manipulación de datos
+library(plotly)     # Gráficos interactivos
+
+# Librerías para análisis estadístico
+library(boot)       # Bootstrap y validación cruzada
+library(car)        # Regresión y análisis multivariado
+library(QuantPsyc)  # Estadísticas avanzadas
+
+# Librerías para machine learning
+library(NbClust)    # Determinación de clusters
+library(factoextra) # Visualización de clusters
+library(mvtnorm)    # Distribuciones multivariadas
+library(dendextend) # Dendrogramas
+library(rpart)      # Árboles de decisión
+
+# Librerías para visualización
+library(aplpack)    # Gráficos adicionales
+library(corrplot)   # Matrices de correlación
+library(sm)         # Gráficos suavizados
+library(modeest)    # Estadísticas de moda
+
+# Librerías para análisis de datos faltantes
+library(mice)       # Imputación múltiple
+library(gapminder)  # Datasets de referencia
+
+# ==============================================================================
+# SECCIÓN 2: CARGA Y PREPARACIÓN DE DATOS
+# ==============================================================================
+
+# Cargar dataset desde GitHub
 url <- "https://raw.githubusercontent.com/andyszccr/MaterialApoyo_R/main/05%20Proyecto%20final/gym_members_exercise_tracking.csv"
 gym_cuc <- read.csv(url)
 
-# 2. Limpieza y transformación de datos
+# Limpieza y transformación de datos
+# Convertir variables categóricas a numéricas para análisis
 gym_cuc <- gym_cuc %>%
-  mutate(Workout_Type = as.integer(factor(Workout_Type)),
-         Gender = as.integer(factor(Gender)))
+  mutate(
+    Workout_Type = as.integer(factor(Workout_Type)),
+    Gender = as.integer(factor(Gender))
+  )
 
 # 3. Hipótesis a investigar:
 # H1: ¿Existe una relación entre la duración del entrenamiento y las calorías quemadas?
