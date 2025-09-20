@@ -133,8 +133,28 @@ Este repositorio está diseñado para ser un recurso colaborativo. Las contribuc
 3. **Agregar nuevos ejercicios** o proyectos
 4. **Mejorar la documentación** existente
 
-## 📚 Recursos Adicionales
+## 📚 Material Adicional y Recursos
 
+### 🎯 **Guías de Referencia**
+- **[Guía de Referencia Rápida](01_Introduccion_R/guia_referencia_rapida.md)** - Comandos esenciales de R
+- **[Glosario de Términos](glosario_terminos_r.md)** - Definiciones importantes
+- **[Mejores Prácticas](mejores_practicas_r.md)** - Estándares de programación
+- **[Solución de Problemas](solucion_problemas_comunes.md)** - Errores frecuentes y soluciones
+
+### 💼 **Proyectos y Casos Prácticos**
+- **[Proyectos de Ejemplo](proyectos_ejemplo.md)** - 5 proyectos completos paso a paso
+- **[Casos de Uso Prácticos](casos_uso_practicos.md)** - Escenarios reales con datasets
+- **[Integración con Herramientas](integracion_herramientas.md)** - Conectar R con otras tecnologías
+
+### 📖 **Recursos de Aprendizaje**
+- **[Recursos de Aprendizaje](recursos_aprendizaje.md)** - Cursos, libros, sitios web
+- **[Fuentes y Referencias](fuentes_referencias.md)** - Referencias académicas especializadas
+- **[Checklist de Progreso](checklist_progreso.md)** - Sistema de seguimiento por niveles
+
+### 📋 **Índice Completo**
+- **[Índice de Material Adicional](INDICE_MATERIAL_ADICIONAL.md)** - Navegación completa del contenido
+
+### 🌐 **Enlaces Externos**
 - [Documentación oficial de R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)
 - [R for Data Science](https://r4ds.had.co.nz/)
 - [Tidyverse](https://www.tidyverse.org/)

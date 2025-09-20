@@ -14,6 +14,13 @@ Esta carpeta contiene todos los archivos de datos utilizados en los ejercicios y
 - **census-retail.csv**: Datos del censo retail
 - **students_with_dates.csv**: Datos de estudiantes con fechas
 
+### 🆕 Datasets de Ejemplo (Nuevos)
+- **ventas_tienda.csv**: Datos de ventas diarias por producto y categoría
+- **datos_medicos.csv**: Datos de pacientes con variables médicas y demográficas
+- **viviendas.csv**: Datos de propiedades inmobiliarias con características
+- **encuesta_satisfaccion.csv**: Datos de encuesta de satisfacción del cliente
+- **rendimiento_academico.csv**: Datos de calificaciones y asistencia estudiantil
+
 ### Datasets de Modelado
 - Datos del Titanic para árboles de decisión
 - USArrests para clustering

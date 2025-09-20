@@ -1,0 +1,320 @@
+---
+title: "Presentación de Análisis de Datos"
+subtitle: "Análisis de [Tema del Proyecto]"
+author: "Tu Nombre"
+date: "`r Sys.Date()`"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    transition: faster
+    theme: flatly
+    css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  fig.align = "center"
+)
+
+# Cargar librerías
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(knitr)
+library(DT)
+
+# Cargar datos
+datos <- read.csv("../datasets/[nombre_dataset].csv")
+```
+
+# Introducción {.smaller}
+
+## Objetivo del Análisis
+
+- **Problema a resolver:** [Describir el problema]
+- **Objetivos específicos:** 
+  - [Objetivo 1]
+  - [Objetivo 2]
+  - [Objetivo 3]
+- **Metodología:** Análisis exploratorio de datos con R
+
+## Contexto
+
+- **Dataset:** [Nombre del dataset]
+- **Período:** [Fechas o período]
+- **Fuente:** [Origen de los datos]
+- **Tamaño:** `r nrow(datos)` observaciones, `r ncol(datos)` variables
+
+---
+
+# Metodología {.smaller}
+
+## Enfoque del Análisis
+
+1. **Exploración inicial** de los datos
+2. **Limpieza y preparación** de datos
+3. **Análisis estadístico** descriptivo
+4. **Visualización** de resultados
+5. **Interpretación** y conclusiones
+
+## Herramientas Utilizadas
+
+- **R** para análisis estadístico
+- **Tidyverse** para manipulación de datos
+- **ggplot2** para visualizaciones
+- **R Markdown** para reportes
+
+---
+
+# Exploración de Datos {.smaller}
+
+## Estructura del Dataset
+
+```{r estructura-datos}
+# Información básica del dataset
+info_tabla <- data.frame(
+  "Métrica" = c("Filas", "Columnas", "Variables Numéricas", "Variables Categóricas"),
+  "Valor" = c(
+    nrow(datos),
+    ncol(datos),
+    sum(sapply(datos, is.numeric)),
+    sum(sapply(datos, function(x) is.factor(x) || is.character(x)))
+  )
+)
+
+kable(info_tabla, caption = "Información General del Dataset")
+```
+
+## Primeras Observaciones
+
+```{r primeras-observaciones}
+# Mostrar primeras filas
+kable(head(datos, 5), caption = "Primeras 5 observaciones")
+```
+
+---
+
+# Análisis Descriptivo {.smaller}
+
+## Variables Numéricas
+
+```{r estadisticas-numericas}
+numericas <- datos[sapply(datos, is.numeric)]
+
+if(ncol(numericas) > 0) {
+  kable(summary(numericas), caption = "Estadísticas Descriptivas")
+} else {
+  cat("No hay variables numéricas en el dataset.")
+}
+```
+
+## Distribución de Variables
+
+```{r distribucion, fig.height=6}
+if(ncol(numericas) > 0) {
+  # Tomar las primeras 4 variables numéricas
+  vars_mostrar <- head(names(numericas), 4)
+  
+  datos_long <- datos %>%
+    select(all_of(vars_mostrar)) %>%
+    pivot_longer(everything(), names_to = "Variable", values_to = "Valor")
+  
+  ggplot(datos_long, aes(x = Valor)) +
+    geom_histogram(bins = 20, fill = "steelblue", alpha = 0.7) +
+    facet_wrap(~Variable, scales = "free") +
+    labs(title = "Distribución de Variables Numéricas",
+         x = "Valor", y = "Frecuencia") +
+    theme_minimal()
+}
+```
+
+---
+
+# Análisis de Categorías {.smaller}
+
+## Variables Categóricas
+
+```{r categorias}
+categoricas <- datos[sapply(datos, function(x) is.factor(x) || is.character(x))]
+
+if(ncol(categoricas) > 0) {
+  # Mostrar distribución de la primera variable categórica
+  primera_cat <- names(categoricas)[1]
+  
+  tabla_dist <- table(datos[[primera_cat]], useNA = "ifany")
+  tabla_prop <- prop.table(tabla_dist) * 100
+  
+  tabla_resumen <- data.frame(
+    Categoría = names(tabla_dist),
+    Frecuencia = as.numeric(tabla_dist),
+    Porcentaje = round(as.numeric(tabla_prop), 1)
+  )
+  
+  kable(tabla_resumen, caption = paste("Distribución de", primera_cat))
+}
+```
+
+## Visualización de Categorías
+
+```{r grafico-categorias, fig.height=6}
+if(ncol(categoricas) > 0) {
+  primera_cat <- names(categoricas)[1]
+  
+  ggplot(datos, aes_string(x = primera_cat)) +
+    geom_bar(fill = "lightcoral", alpha = 0.7) +
+    labs(title = paste("Distribución de", primera_cat),
+         x = primera_cat, y = "Frecuencia") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+```
+
+---
+
+# Análisis de Correlaciones {.smaller}
+
+## Matriz de Correlaciones
+
+```{r correlaciones}
+numericas <- datos[sapply(datos, is.numeric)]
+
+if(ncol(numericas) >= 2) {
+  cor_matrix <- cor(numericas, use = "complete.obs")
+  
+  # Crear tabla de correlaciones más fuertes
+  cor_df <- expand.grid(Var1 = rownames(cor_matrix), Var2 = colnames(cor_matrix))
+  cor_df$Correlacion <- as.vector(cor_matrix)
+  cor_df <- cor_df[cor_df$Var1 != cor_df$Var2, ]
+  cor_df <- cor_df[order(abs(cor_df$Correlacion), decreasing = TRUE), ]
+  
+  kable(head(cor_df, 5), 
+        caption = "Top 5 Correlaciones Más Fuertes",
+        digits = 3)
+}
+```
+
+## Heatmap de Correlaciones
+
+```{r heatmap, fig.height=6}
+if(ncol(numericas) >= 2) {
+  library(reshape2)
+  
+  cor_melted <- melt(cor_matrix)
+  
+  ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                        midpoint = 0, limit = c(-1,1)) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 8),
+          axis.text.y = element_text(size = 8)) +
+    labs(title = "Matriz de Correlaciones", x = "", y = "") +
+    coord_fixed()
+}
+```
+
+---
+
+# Análisis Temporal {.smaller}
+
+## Tendencias en el Tiempo
+
+```{r tendencias, fig.height=6}
+# Análisis temporal si hay variable de fecha
+if("fecha" %in% names(datos)) {
+  datos %>%
+    group_by(fecha) %>%
+    summarise(total = sum(ventas, na.rm = TRUE)) %>%
+    ggplot(aes(x = as.Date(fecha), y = total)) +
+    geom_line(color = "steelblue", size = 1.5) +
+    geom_point(color = "red", size = 2) +
+    labs(title = "Tendencia Temporal",
+         x = "Fecha", y = "Total") +
+    theme_minimal()
+} else {
+  # Gráfico alternativo
+  ggplot(datos, aes(x = factor(1))) +
+    geom_bar(fill = "green", alpha = 0.7) +
+    labs(title = "Distribución General", x = "", y = "Frecuencia") +
+    theme_minimal()
+}
+```
+
+---
+
+# Hallazgos Principales {.smaller}
+
+## Resultados Clave
+
+### 📊 **Hallazgo 1**
+- [Descripción del hallazgo]
+- **Impacto:** [Explicar la importancia]
+
+### 📈 **Hallazgo 2**
+- [Descripción del hallazgo]
+- **Implicaciones:** [Explicar las consecuencias]
+
+### 🔍 **Hallazgo 3**
+- [Descripción del hallazgo]
+- **Relevancia:** [Explicar por qué es importante]
+
+---
+
+# Conclusiones {.smaller}
+
+## Resumen Ejecutivo
+
+1. **Objetivo cumplido:** [Evaluar si se cumplió el objetivo]
+2. **Insights principales:** [Resumir los hallazgos más importantes]
+3. **Limitaciones:** [Mencionar limitaciones del análisis]
+
+## Próximos Pasos
+
+- [ ] [Acción recomendada 1]
+- [ ] [Acción recomendada 2]
+- [ ] [Acción recomendada 3]
+
+---
+
+# Preguntas y Discusión {.smaller}
+
+## Contacto
+
+**Autor:** [Tu Nombre]  
+**Email:** [tu.email@ejemplo.com]  
+**Fecha:** `r Sys.Date()`
+
+## Recursos Adicionales
+
+- [Enlace a código completo]
+- [Enlace a dataset]
+- [Referencias utilizadas]
+
+---
+
+# Apéndice {.smaller}
+
+## Detalles Técnicos
+
+```{r info-tecnica}
+# Información técnica del análisis
+cat("Versión de R:", R.version.string, "\n")
+cat("Paquetes utilizados: tidyverse, ggplot2, plotly\n")
+cat("Fecha de análisis:", Sys.Date(), "\n")
+cat("Tiempo de procesamiento:", Sys.time(), "\n")
+```
+
+## Código de Reproducción
+
+```{r codigo-reproduccion, eval=FALSE}
+# Código para reproducir el análisis
+# datos <- read.csv("../datasets/[nombre_dataset].csv")
+# library(tidyverse)
+# library(ggplot2)
+# [Resto del código...]
+```

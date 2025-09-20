@@ -1,0 +1,277 @@
+---
+title: "Dashboard Interactivo"
+author: "Tu Nombre"
+date: "`r Sys.Date()`"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: flatly
+    source_code: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(DT)
+library(knitr)
+library(shiny)
+
+# Cargar datos
+datos <- read.csv("../datasets/[nombre_dataset].csv")
+
+# Configuración de gráficos
+options(scipen = 999)
+```
+
+Page 1
+=====================================
+
+Row
+-------------------------------------
+
+### Métricas Principales {.value-box}
+
+```{r metricas-principales}
+# Calcular métricas principales
+total_observaciones <- nrow(datos)
+fecha_inicio <- min(datos$fecha, na.rm = TRUE)
+fecha_fin <- max(datos$fecha, na.rm = TRUE)
+
+# Mostrar métricas
+cat("Total de observaciones:", total_observaciones)
+```
+
+Row
+-------------------------------------
+
+### Gráfico Principal
+
+```{r grafico-principal, fig.width=12, fig.height=6}
+# Gráfico principal del dashboard
+# Ajustar según el tipo de datos
+
+# Ejemplo: Gráfico de líneas temporal
+if("fecha" %in% names(datos) && "ventas" %in% names(datos)) {
+  datos %>%
+    group_by(fecha) %>%
+    summarise(total = sum(ventas, na.rm = TRUE)) %>%
+    ggplot(aes(x = as.Date(fecha), y = total)) +
+    geom_line(color = "steelblue", size = 1) +
+    geom_point(color = "red", size = 2) +
+    labs(title = "Tendencia de Ventas",
+         x = "Fecha", y = "Total de Ventas") +
+    theme_minimal()
+} else {
+  # Gráfico alternativo
+  ggplot(datos, aes(x = factor(1))) +
+    geom_bar(fill = "steelblue") +
+    labs(title = "Distribución de Datos", x = "", y = "Frecuencia") +
+    theme_minimal()
+}
+```
+
+Row
+-------------------------------------
+
+### Tabla de Datos
+
+```{r tabla-datos}
+# Tabla interactiva con los datos
+datatable(
+  head(datos, 100),
+  options = list(
+    pageLength = 10,
+    scrollX = TRUE,
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel')
+  ),
+  caption = "Vista previa de los datos (primeras 100 filas)"
+)
+```
+
+Page 2
+=====================================
+
+Row
+-------------------------------------
+
+### Análisis por Categorías
+
+```{r analisis-categorias, fig.width=12, fig.height=8}
+# Análisis por categorías
+if("categoria" %in% names(datos)) {
+  datos %>%
+    group_by(categoria) %>%
+    summarise(
+      total = sum(ventas, na.rm = TRUE),
+      promedio = mean(ventas, na.rm = TRUE),
+      n = n()
+    ) %>%
+    ggplot(aes(x = categoria, y = total, fill = categoria)) +
+    geom_col() +
+    labs(title = "Ventas por Categoría",
+         x = "Categoría", y = "Total de Ventas") +
+    theme_minimal() +
+    theme(legend.position = "none")
+} else {
+  # Gráfico alternativo
+  ggplot(datos, aes(x = factor(1))) +
+    geom_bar(fill = "lightcoral") +
+    labs(title = "Distribución General", x = "", y = "Frecuencia") +
+    theme_minimal()
+}
+```
+
+Row
+-------------------------------------
+
+### Distribución de Valores
+
+```{r distribucion, fig.width=12, fig.height=6}
+# Histograma de distribución
+numericas <- datos[sapply(datos, is.numeric)]
+
+if(ncol(numericas) > 0) {
+  var_principal <- names(numericas)[1]
+  
+  ggplot(datos, aes_string(x = var_principal)) +
+    geom_histogram(bins = 30, fill = "lightgreen", alpha = 0.7) +
+    labs(title = paste("Distribución de", var_principal),
+         x = var_principal, y = "Frecuencia") +
+    theme_minimal()
+}
+```
+
+Page 3
+=====================================
+
+Row
+-------------------------------------
+
+### Gráfico Interactivo
+
+```{r grafico-interactivo}
+# Gráfico interactivo con plotly
+if("fecha" %in% names(datos) && "ventas" %in% names(datos)) {
+  p <- datos %>%
+    ggplot(aes(x = as.Date(fecha), y = ventas, color = categoria)) +
+    geom_line() +
+    geom_point() +
+    labs(title = "Ventas por Fecha y Categoría",
+         x = "Fecha", y = "Ventas") +
+    theme_minimal()
+  
+  ggplotly(p)
+} else {
+  # Gráfico alternativo
+  p <- ggplot(datos, aes(x = factor(1))) +
+    geom_bar(fill = "purple") +
+    labs(title = "Distribución Interactiva", x = "", y = "Frecuencia") +
+    theme_minimal()
+  
+  ggplotly(p)
+}
+```
+
+Row
+-------------------------------------
+
+### Resumen Estadístico
+
+```{r resumen-estadistico}
+# Resumen estadístico
+numericas <- datos[sapply(datos, is.numeric)]
+
+if(ncol(numericas) > 0) {
+  kable(
+    summary(numericas),
+    caption = "Resumen Estadístico de Variables Numéricas"
+  )
+} else {
+  cat("No hay variables numéricas para mostrar estadísticas.")
+}
+```
+
+Page 4
+=====================================
+
+Row
+-------------------------------------
+
+### Análisis de Correlaciones
+
+```{r correlaciones, fig.width=12, fig.height=8}
+# Matriz de correlaciones
+numericas <- datos[sapply(datos, is.numeric)]
+
+if(ncol(numericas) >= 2) {
+  cor_matrix <- cor(numericas, use = "complete.obs")
+  
+  library(reshape2)
+  cor_melted <- melt(cor_matrix)
+  
+  ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                        midpoint = 0, limit = c(-1,1)) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 8)) +
+    labs(title = "Matriz de Correlaciones", x = "", y = "")
+} else {
+  cat("Se necesitan al menos 2 variables numéricas para calcular correlaciones.")
+}
+```
+
+Row
+-------------------------------------
+
+### Filtros y Controles
+
+```{r controles}
+# Controles interactivos (requiere Shiny)
+# Descomentar si quieres usar controles interactivos
+
+# shinyApp(
+#   ui = fluidPage(
+#     titlePanel("Controles del Dashboard"),
+#     sidebarLayout(
+#       sidebarPanel(
+#         selectInput("categoria", "Categoría:", 
+#                     choices = unique(datos$categoria)),
+#         dateRangeInput("fechas", "Rango de fechas:",
+#                        start = min(datos$fecha),
+#                        end = max(datos$fecha))
+#       ),
+#       mainPanel(
+#         plotOutput("grafico_filtrado")
+#       )
+#     )
+#   ),
+#   server = function(input, output) {
+#     output$grafico_filtrado <- renderPlot({
+#       datos_filtrados <- datos %>%
+#         filter(categoria == input$categoria,
+#                fecha >= input$fechas[1],
+#                fecha <= input$fechas[2])
+#       
+#       ggplot(datos_filtrados, aes(x = fecha, y = ventas)) +
+#         geom_line() +
+#         labs(title = "Datos Filtrados")
+#     })
+#   }
+# )
+```
+
+---
+
+### Información del Dashboard
+
+**Fecha de generación:** `r Sys.Date()`
+
+**Total de observaciones:** `r nrow(datos)`
+
+**Período de datos:** `r if("fecha" %in% names(datos)) paste(min(datos$fecha, na.rm = TRUE), "a", max(datos$fecha, na.rm = TRUE))`
+
+**Variables disponibles:** `r ncol(datos)`

@@ -1,0 +1,320 @@
+---
+title: "Análisis Completo de Datos"
+author: "Tu Nombre"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    theme: flatly
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  fig.align = "center"
+)
+
+# Cargar librerías necesarias
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(DT)
+library(plotly)
+```
+
+# Resumen Ejecutivo
+
+**Objetivo del Análisis:** [Describir el objetivo principal del análisis]
+
+**Dataset:** [Nombre del dataset]
+
+**Período de Análisis:** [Fechas o período]
+
+**Hallazgos Principales:**
+- [Hallazgo 1]
+- [Hallazgo 2]
+- [Hallazgo 3]
+
+---
+
+# 1. Configuración y Carga de Datos
+
+```{r carga-datos}
+# Cargar dataset
+datos <- read.csv("../datasets/[nombre_dataset].csv")
+
+# Exploración inicial
+cat("Dimensiones del dataset:", dim(datos))
+str(datos)
+```
+
+```{r info-dataset}
+# Información básica del dataset
+kable(data.frame(
+  "Métrica" = c("Filas", "Columnas", "Variables Numéricas", "Variables Categóricas"),
+  "Valor" = c(
+    nrow(datos),
+    ncol(datos),
+    sum(sapply(datos, is.numeric)),
+    sum(sapply(datos, function(x) is.factor(x) || is.character(x)))
+  )
+), caption = "Información General del Dataset")
+```
+
+# 2. Limpieza y Preparación de Datos
+
+```{r limpieza}
+# Verificar valores faltantes
+faltantes <- sapply(datos, function(x) sum(is.na(x)))
+faltantes_tabla <- data.frame(
+  Variable = names(faltantes),
+  Valores_Faltantes = faltantes,
+  Porcentaje = round(faltantes / nrow(datos) * 100, 2)
+)
+
+kable(faltantes_tabla[faltantes_tabla$Valores_Faltantes > 0, ], 
+      caption = "Valores Faltantes por Variable")
+```
+
+```{r procesamiento}
+# Limpiar datos (ajustar según necesidad)
+datos_limpios <- datos %>%
+  # Eliminar filas con valores faltantes críticos
+  # filter(!is.na(variable_importante)) %>%
+  
+  # Convertir tipos de datos
+  # mutate(fecha = as.Date(fecha)) %>%
+  
+  # Crear nuevas variables
+  # mutate(nueva_variable = variable1 / variable2) %>%
+  
+  # Filtrar datos relevantes
+  # filter(año >= 2020) %>%
+  
+  identity()  # Placeholder - reemplazar con transformaciones reales
+
+cat("Datos después de limpieza:", dim(datos_limpios))
+```
+
+# 3. Análisis Exploratorio de Datos (EDA)
+
+## 3.1 Estadísticas Descriptivas
+
+```{r estadisticas}
+# Estadísticas para variables numéricas
+numericas <- datos_limpios[sapply(datos_limpios, is.numeric)]
+
+if(ncol(numericas) > 0) {
+  kable(summary(numericas), caption = "Estadísticas Descriptivas - Variables Numéricas")
+} else {
+  cat("No hay variables numéricas en el dataset.")
+}
+```
+
+## 3.2 Análisis de Variables Categóricas
+
+```{r categoricas}
+# Análisis de variables categóricas
+categoricas <- datos_limpios[sapply(datos_limpios, function(x) is.factor(x) || is.character(x))]
+
+if(ncol(categoricas) > 0) {
+  for(i in 1:ncol(categoricas)) {
+    cat("\\n###", names(categoricas)[i], "\\n")
+    
+    tabla <- table(categoricas[, i], useNA = "ifany")
+    tabla_prop <- prop.table(tabla) * 100
+    
+    kable(data.frame(
+      Categoría = names(tabla),
+      Frecuencia = as.numeric(tabla),
+      Porcentaje = round(as.numeric(tabla_prop), 2)
+    ), caption = paste("Distribución de", names(categoricas)[i]))
+  }
+} else {
+  cat("No hay variables categóricas en el dataset.")
+}
+```
+
+## 3.3 Visualizaciones Exploratorias
+
+```{r histogramas, fig.height=8}
+# Histogramas para variables numéricas
+if(ncol(numericas) > 0) {
+  numericas_long <- numericas %>%
+    pivot_longer(everything(), names_to = "Variable", values_to = "Valor")
+  
+  ggplot(numericas_long, aes(x = Valor)) +
+    geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
+    facet_wrap(~Variable, scales = "free") +
+    labs(title = "Distribución de Variables Numéricas",
+         x = "Valor", y = "Frecuencia") +
+    theme_minimal()
+}
+```
+
+```{r boxplots, fig.height=6}
+# Boxplots para variables numéricas
+if(ncol(numericas) > 0 && ncol(numericas) <= 6) {
+  numericas_long <- numericas %>%
+    pivot_longer(everything(), names_to = "Variable", values_to = "Valor")
+  
+  ggplot(numericas_long, aes(x = Variable, y = Valor)) +
+    geom_boxplot(fill = "lightcoral", alpha = 0.7) +
+    labs(title = "Distribución de Variables Numéricas (Boxplots)",
+         x = "Variable", y = "Valor") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+```
+
+# 4. Análisis Estadístico
+
+## 4.1 Correlaciones
+
+```{r correlaciones}
+# Matriz de correlaciones
+if(ncol(numericas) >= 2) {
+  cor_matrix <- cor(numericas, use = "complete.obs")
+  
+  # Crear tabla de correlaciones
+  cor_df <- expand.grid(Var1 = rownames(cor_matrix), Var2 = colnames(cor_matrix))
+  cor_df$Correlacion <- as.vector(cor_matrix)
+  cor_df <- cor_df[cor_df$Var1 != cor_df$Var2, ]
+  cor_df <- cor_df[order(abs(cor_df$Correlacion), decreasing = TRUE), ]
+  
+  kable(head(cor_df, 10), 
+        caption = "Top 10 Correlaciones Más Fuertes",
+        digits = 3)
+}
+```
+
+```{r heatmap-correlacion, fig.height=8}
+# Heatmap de correlaciones
+if(ncol(numericas) >= 2) {
+  library(reshape2)
+  
+  cor_melted <- melt(cor_matrix)
+  
+  ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                        midpoint = 0, limit = c(-1,1), space = "Lab", 
+                        name = "Correlación") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 8),
+          axis.text.y = element_text(size = 8)) +
+    labs(title = "Matriz de Correlaciones",
+         x = "", y = "") +
+    coord_fixed()
+}
+```
+
+## 4.2 Pruebas Estadísticas
+
+```{r pruebas-estadisticas}
+# Ejemplo de pruebas estadísticas (ajustar según necesidad)
+if(ncol(numericas) >= 2) {
+  # Prueba t para comparar medias
+  cat("### Prueba t de Student\\n")
+  cat("Comparando medias entre dos grupos...\\n")
+  
+  # Ejemplo: si tienes una variable categórica y una numérica
+  # t_test <- t.test(numericas$variable1 ~ datos_limpios$categoria)
+  # print(t_test)
+}
+```
+
+# 5. Visualizaciones Avanzadas
+
+```{r graficos-avanzados, fig.height=10}
+# Crear visualizaciones específicas según el tipo de datos
+# Ejemplo: gráfico de dispersión con tendencia
+
+if(ncol(numericas) >= 2) {
+  # Tomar las dos primeras variables numéricas
+  var1 <- names(numericas)[1]
+  var2 <- names(numericas)[2]
+  
+  ggplot(datos_limpios, aes_string(x = var1, y = var2)) +
+    geom_point(alpha = 0.6, color = "steelblue") +
+    geom_smooth(method = "lm", color = "red", se = TRUE) +
+    labs(title = paste("Relación entre", var1, "y", var2),
+         x = var1, y = var2) +
+    theme_minimal()
+}
+```
+
+# 6. Análisis de Tendencias Temporales (si aplica)
+
+```{r tendencias}
+# Análisis temporal (ajustar si hay variables de fecha)
+# Ejemplo:
+# if("fecha" %in% names(datos_limpios)) {
+#   datos_limpios %>%
+#     group_by(año = year(fecha)) %>%
+#     summarise(promedio = mean(variable_numerica)) %>%
+#     ggplot(aes(x = año, y = promedio)) +
+#     geom_line(color = "blue", size = 1) +
+#     geom_point(color = "red", size = 2) +
+#     labs(title = "Tendencia Temporal", x = "Año", y = "Promedio") +
+#     theme_minimal()
+# }
+```
+
+# 7. Conclusiones y Recomendaciones
+
+## 7.1 Hallazgos Principales
+
+1. **[Hallazgo 1]**: [Descripción detallada]
+2. **[Hallazgo 2]**: [Descripción detallada]
+3. **[Hallazgo 3]**: [Descripción detallada]
+
+## 7.2 Limitaciones del Análisis
+
+- [Limitación 1]
+- [Limitación 2]
+- [Limitación 3]
+
+## 7.3 Recomendaciones
+
+1. **[Recomendación 1]**: [Descripción y justificación]
+2. **[Recomendación 2]**: [Descripción y justificación]
+3. **[Recomendación 3]**: [Descripción y justificación]
+
+---
+
+# Apéndice
+
+## A. Código de Procesamiento
+
+```{r codigo-completo, eval=FALSE}
+# Código completo para reproducir el análisis
+# [Incluir aquí todo el código utilizado]
+
+# Cargar datos
+# datos <- read.csv("../datasets/[nombre_dataset].csv")
+
+# Procesamiento
+# [Resto del código...]
+```
+
+## B. Referencias
+
+- [Referencia 1]
+- [Referencia 2]
+- [Referencia 3]
+
+---
+
+**Reporte generado el:** `r Sys.Date()`
+
+**Autor:** [Tu Nombre]
+
+**Contacto:** [tu.email@ejemplo.com]
