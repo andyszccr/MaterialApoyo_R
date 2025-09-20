@@ -4,18 +4,30 @@ Esta sección contiene presentaciones, documentos PDF, y material de referencia 
 
 ## 📁 Contenido
 
-### Presentaciones de Clase
-- **Clase 3**: Lenguaje R (Vectores, Matrices y Factores)
-- **Clase 7**: Dataframes en R
-- **Clase 8**: Condiciones, ciclos, funciones, dplyr, ggplot2
-- **Clase 12**: Análisis Exploratorio de Datos
+### Archivos Disponibles
 
-### Material de Referencia
-- Resúmenes de técnicas de minería de datos
-- Guías de buenas prácticas
-- Documentación de librerías principales
+#### Presentaciones de Clase
+- **Clase 3 Lenguaje R (Vectores, Matrices y Factores).pptx**
+- **Clase 3 Tecnicas de Mineria de Datos.pptx**
+- **Clase 7 Lenguaje R (Dataframes).pptx**
+- **Clase 8 Lenguaje R(condiciones,ciclos, funciones, dplr, ggplot2).pptx**
+- **Clase 12 - Analisis exploratorio de Datos.pptx**
+- **Limpieza de datos.pptx**
 
-### Investigaciones
+#### Documentos PDF
+- **Data_Mining_Techniques_Review Resumido.pdf**
+- **Resumen de tecnicas de mineria de Datos_Olman Andrey Sanchez Zuñiga.pdf**
+- **01 Arbol de desiciones.pdf**
+- **01 Proyecto Final Gimnasio.pdf**
+- **La Importancia de los datos en la Sombra.pdf**
+- **Resumen de Datos en las sombras_Olman Andrey Sanchez Zuñiga.pdf**
+
+#### Documentos Word
+- **Resumen de tecnicas de mineria de Datos.docx**
+- **Pautas Proyecto Final.docx**
+- **Los datos en las sombras resumen.docx**
+
+#### Investigaciones
 - Análisis sobre "La Importancia de los datos en la Sombra"
 - Resúmenes de artículos académicos
 - Investigaciones sobre técnicas de análisis

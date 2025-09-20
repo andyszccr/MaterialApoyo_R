@@ -45,9 +45,8 @@ library(gapminder)  # Datasets de referencia
 # SECCIÓN 2: CARGA Y PREPARACIÓN DE DATOS
 # ==============================================================================
 
-# Cargar dataset desde GitHub
-url <- "https://raw.githubusercontent.com/andyszccr/MaterialApoyo_R/main/05%20Proyecto%20final/gym_members_exercise_tracking.csv"
-gym_cuc <- read.csv(url)
+# Cargar dataset desde la carpeta datasets local
+gym_cuc <- read.csv("../datasets/gym_members_exercise_tracking.csv")
 
 # Limpieza y transformación de datos
 # Convertir variables categóricas a numéricas para análisis

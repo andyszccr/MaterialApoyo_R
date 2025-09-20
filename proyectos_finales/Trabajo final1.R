@@ -20,8 +20,7 @@ library(sm)
 library(modeest)  # Para la función mfv
 
 # 1. Cargar y preparar los datos
-url <- "https://raw.githubusercontent.com/andyszccr/MaterialApoyo_R/main/05%20Proyecto%20final/gym_members_exercise_tracking.csv"
-gym_cuc <- read.csv(url)
+gym_cuc <- read.csv("../datasets/gym_members_exercise_tracking.csv")
 
 # 2. Limpieza y transformación de datos
 gym_cuc <- gym_cuc %>%

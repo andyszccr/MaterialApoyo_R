@@ -9,8 +9,8 @@ library(tidyr)
 library(stringr)
 library(lubridate)
 
-census <- read_csv("census-retail.csv")
-students <- read_csv("students_with_dates.csv")
+census <- read_csv("../../datasets/census-retail.csv")
+students <- read_csv("../../datasets/students_with_dates.csv")
 
 class(census)
 dim(census)
