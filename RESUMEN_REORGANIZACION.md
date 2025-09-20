@@ -37,7 +37,6 @@ Reorganización completa del repositorio MaterialApoyo_R para mejorar la estruct
 - **21 scripts R** → distribuidos por categorías
 - **24 archivos de documentación** → `documentacion/`
 - **18 archivos de proyectos** → `proyectos_finales/`
-- **6 archivos de exámenes** → `examenes/` (ya organizados)
 
 ### Estructura Final
 ```
@@ -49,7 +48,6 @@ MaterialApoyo_R/
 ├── 05_Analisis_Exploratorio/    # 1 script organizado
 ├── datasets/                    # 5 archivos CSV
 ├── proyectos_finales/           # 18 archivos consolidados
-├── examenes/                    # 6 archivos
 ├── documentacion/               # 24 archivos organizados
 ├── config/                      # 3 archivos de configuración
 └── README.md                    # Documentación principal

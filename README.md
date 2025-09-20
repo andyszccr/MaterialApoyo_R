@@ -48,7 +48,6 @@ MaterialApoyo_R/
 │   └── practicas_eda/          # Análisis exploratorio
 ├── datasets/                    # Archivos de datos (CSV)
 ├── proyectos_finales/           # Proyectos integradores
-├── examenes/                    # Exámenes y evaluaciones
 ├── documentacion/               # Presentaciones, PDFs
 ├── config/                      # Configuración del proyecto
 └── README.md                    # Este archivo

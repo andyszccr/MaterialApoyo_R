@@ -71,7 +71,6 @@ docs_to_check <- list(
   c("../05_Analisis_Exploratorio/README.md", "README EDA"),
   c("../datasets/README.md", "README datasets"),
   c("../proyectos_finales/README.md", "README proyectos"),
-  c("../examenes/README.md", "README exámenes"),
   c("../documentacion/README.md", "README documentación"),
   c("../config/README.md", "README configuración")
 )
