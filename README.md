@@ -1,219 +1,237 @@
 # Material de apoyo en R
 
-Guía práctica para aprender R desde cero hasta un análisis completo: leer datos, limpiarlos, graficarlos, describirlos y ajustar un modelo sencillo. El material está pensado para estudiarlo en RStudio, script por script, en el orden de las carpetas.
+Este material es para quien empieza R desde cero: estudiantes y cualquier persona que quiera leer datos, limpiarlos, graficarlos y contar qué encontró. Se estudia en RStudio, un script detrás de otro, en el orden de las carpetas.
 
-R es un lenguaje para estadística y análisis de datos. RStudio es el programa donde se escribe y se ejecuta ese código. Este repositorio es el cuaderno de práctica: ejercicios comentados, datos en CSV y proyectos que juntan varias técnicas.
+Al terminarlo puedes abrir un CSV, resumirlo, hacer un gráfico con título y ejes, y cerrar con una conclusión escrita en tus palabras.
 
-## Cómo empezar
+R es el lenguaje: hace las cuentas y los gráficos. RStudio es el programa donde escribes ese lenguaje y ves el resultado. Esta carpeta es el cuaderno: ejercicios comentados, datos y dos proyectos ya armados.
 
-Necesitas R 4.0 o superior, RStudio Desktop y conexión a internet la primera vez, para instalar paquetes.
+## Primera sesión
 
-1. Instala R desde [CRAN](https://cran.r-project.org/). En Windows entra en *Download R for Windows*, luego *base*, y ejecuta el instalador con las opciones por defecto.
-2. Instala [RStudio Desktop](https://posit.co/download/rstudio-desktop/) (la versión gratuita). En macOS arrastra la aplicación a *Applications*. En Ubuntu o Debian puedes instalar R con `sudo apt update` y `sudo apt install r-base r-base-dev`, y RStudio desde el instalador `.deb` de Posit.
-3. Abre RStudio y elige **File > Open Project**, o simplemente **File > Open Folder** y selecciona esta carpeta (`MaterialApoyo_R`).
-4. Comprueba que el directorio de trabajo es la raíz del material:
+Necesitas R 4.0 o superior, RStudio Desktop (gratis) y conexión a internet solo la primera vez, para bajar paquetes.
+
+1. Instala R desde [CRAN](https://cran.r-project.org/). En Windows: *Download R for Windows*, luego *base*, y acepta las opciones del instalador. En macOS baja el archivo `.pkg`. En Ubuntu o Debian: `sudo apt update` y `sudo apt install r-base r-base-dev`.
+2. Instala [RStudio Desktop](https://posit.co/download/rstudio-desktop/). Ábrelo después de instalar R, no antes.
+3. En RStudio elige **File > Open Folder** y selecciona esta carpeta, `MaterialApoyo_R`.
+
+La ventana queda en cuatro zonas. Conviene reconocerlas antes de escribir nada:
+
+| Zona | Para qué sirve |
+| --- | --- |
+| Arriba a la izquierda | El script. Ahí está el código que guardas en un archivo `.R`. |
+| Abajo a la izquierda | La consola. Ahí responde R cuando ejecutas una línea. |
+| Arriba a la derecha | El entorno. La lista de objetos que acabas de crear (vectores, tablas). |
+| Abajo a la derecha | Gráficos, archivos de la carpeta y la ayuda. |
+
+Para correr una línea, haz clic sobre ella y pulsa **Ctrl + Enter** (en Mac, **Cmd + Enter**). Lee el comentario de encima, mira qué apareció en la consola y pasa a la siguiente. Si el resultado es un gráfico, se abre la pestaña **Plots**.
+
+El directorio de trabajo es la carpeta desde la que R busca los archivos. Tiene que ser la raíz de este material. Compruébalo así:
 
 ```r
 getwd()
-R.version
 ```
 
-5. Instala los paquetes del curso. Hazlo una sola vez, con el directorio de trabajo en la raíz:
+La ruta debe terminar en `MaterialApoyo_R`. Si termina en otra carpeta, ve a **Session > Set Working Directory > Choose Directory** y elige esta. Si no, `read.csv("datasets/ventas_tienda.csv")` no encuentra el archivo.
+
+Instala los paquetes una sola vez, con ese directorio ya correcto:
 
 ```r
 source("config/install_packages.R")
 ```
 
-Ese script instala lo que usan los ejercicios: el conjunto tidyverse (`dplyr`, `ggplot2`, `readr`, `stringr`, `lubridate`), gráficos interactivos (`plotly`), modelado (`caret`, `rpart`, `cluster`) y utilidades de reportes (`rmarkdown`, `knitr`).
+Eso baja lo que usan los ejercicios: tidyverse (incluye `dplyr` y `ggplot2`), `plotly` para gráficos interactivos, y paquetes de modelos como `caret` y `rpart`. La primera vez tarda varios minutos. Si pregunta si quieres compilar desde las fuentes, puedes responder que no.
 
-6. Empieza por `01_Introduccion_R/ejercicios_basicos/`. Abre un script, colócate en la primera línea y ejecútala con **Ctrl + Enter**. Lee el comentario, mira el resultado en la consola y sigue línea a línea.
+En **Tools > Global Options > General** deja sin marcar *Restore .RData into workspace at startup* y pon *Save workspace* en *Never*. Cada vez que abras RStudio empiezas vacío, y el resultado sale del script que estás viendo.
 
-En **Tools > Global Options > General** conviene dejar *Restore .RData into workspace at startup* desmarcado y *Save workspace* en *Never*. Así cada sesión empieza limpia y el resultado depende solo del script, no de objetos viejos en memoria.
-
-### Si algo no funciona
+### Si algo falla
 
 | Qué ves | Qué hacer |
 | --- | --- |
-| R no se reconoce en la terminal | Vuelve a abrir RStudio después de instalar R. En Windows, si hace falta, agrega la carpeta `bin` de R a la variable de entorno PATH. |
-| Un paquete no se instala | Revisa la conexión y fija el repositorio: `options(repos = c(CRAN = "https://cran.r-project.org/"))`. Luego instala ese paquete solo: `install.packages("tidyverse")`. |
-| `cannot open file` o no encuentra un CSV | El directorio de trabajo no es la raíz. Usa `getwd()` y `setwd()` con la ruta de `MaterialApoyo_R`, o abre la carpeta de nuevo desde RStudio. |
-| RStudio no abre | En Windows, pruébalo como administrador y revisa el antivirus. En macOS, autoriza la app en Privacidad y seguridad. |
+| RStudio abre y la consola dice que no encuentra R | Cierra RStudio, confirma que R quedó instalado y vuelve a abrirlo. |
+| `there is no package called ...` | Vuelve a correr `source("config/install_packages.R")` con internet. Para uno solo: `install.packages("tidyverse")`. |
+| `cannot open file` o no encuentra un CSV | `getwd()` no apunta a `MaterialApoyo_R`. Cámbialo con **Session > Set Working Directory**. |
+| La consola muestra un error en rojo y no pasa nada | Lee la última línea del mensaje. Casi siempre es un paréntesis sin cerrar, una coma de más o un nombre mal escrito. |
+| Un gráfico no aparece | Revisa la pestaña **Plots**, abajo a la derecha. A veces quedó detrás de **Help** o **Files**. |
 
-Para un diagnóstico rápido: `sessionInfo()`, `installed.packages()` y `list.files()`. La ayuda de una función se abre con `?mean` o `help.start()`.
+La ayuda de una función se abre escribiendo `?mean` en la consola. `sessionInfo()` dice qué versión de R y qué paquetes tienes cargados.
 
-## Cómo está organizado
+## En qué orden estudiar
 
-Las carpetas numeradas son el curso. El resto es apoyo: datos, configuración, plantillas y proyectos ya armados.
+Abre los archivos en este orden. Cada uno supone el anterior. Una sesión de media hora, ejecutando línea a línea, rinde más que leerlos todos de corrido.
+
+1. `01_Introduccion_R/ejercicios_basicos/Numeros.R` — cuentas, `if` y bucles.
+2. En la misma carpeta: `vectores.R`, `listas.R` y `funciones.R`.
+3. `01_Introduccion_R/condicionales.R` y `bucles.R`.
+4. `01_Introduccion_R/factores_y_datos/03 DataFrame Clase 7.R` — la primera tabla.
+5. `01_Introduccion_R/ejercicios_progresivos/ejercicio_1_basico.R` y, cuando ya te sientas suelto, `ejercicios_basicos/01 Practica_ejercicios.R`.
+6. `02_Manipulacion_Datos/dataframes/04 Leer un csv.R` y después `limpieza_datos/Practica stringr - lubridate.R`.
+7. `03_Visualizacion/plot/`, del `01_grafico_linea.R` al `07_ggplot2_intro.R`. Luego practica con los de `03_Visualizacion/graficos/`.
+8. `05_Analisis_Exploratorio/practicas_eda/Practica EDA.R`.
+9. `04_Modelado/clustering/kmeans.r`.
+10. Los proyectos de `proyectos_finales/`: primero el gimnasio, después el árbol del Titanic.
+
+La guía corta de comandos, para copiar cuando no recuerdas la sintaxis, está en `01_Introduccion_R/guia_referencia_rapida.md`.
+
+| Nivel | Qué ya sabes hacer | Listo cuando… |
+| --- | --- | --- |
+| 1. Fundamentos | Operaciones, variables, vectores y funciones como `sum` y `mean` | Corriste `Numeros.R`, `vectores.R` y `listas.R` línea a línea |
+| 2. Datos | Abrir un CSV, filtrar filas y crear una columna | Usaste un archivo de `datasets/` y explicas qué hay en cada columna |
+| 3. Gráficos | Línea, barra, histograma, dispersión, caja y un `ggplot` con título | Hiciste los siete scripts de `03_Visualizacion/plot/` y sabes qué pregunta responde cada gráfico |
+| 4. Estadística | Media, dispersión, correlación y un agrupamiento simple | Contaste un resultado de `Practica EDA.R` con tus palabras |
+| 5. Proyecto | Pregunta, limpieza, gráfico y conclusión en un solo script | Leíste el proyecto del gimnasio y el del Titanic, y armaste el tuyo |
+
+Tres ritmos posibles, si estudias varias veces por semana:
+
+- **Dos a cuatro semanas.** Pasos 1 a 5 y un gráfico de `plot/`.
+- **Dos a tres meses.** El orden completo y uno de los proyectos finales.
+- **Un semestre.** Todo lo anterior, un reporte con una plantilla de `templates/` y la lectura de *R for Data Science*.
+
+## Qué hay en cada carpeta
 
 ```
 MaterialApoyo_R/
-├── 01_Introduccion_R/        # Sintaxis, vectores, funciones, condicionales y bucles
-├── 02_Manipulacion_Datos/    # Data frames, lectura de CSV, limpieza y dplyr
-├── 03_Visualizacion/         # Gráficos base, ggplot2 y plotly
-├── 04_Modelado/              # Clustering y árboles de decisión
-├── 05_Analisis_Exploratorio/ # Estadística descriptiva y práctica de EDA
-├── datasets/                 # CSV que usan los ejercicios y proyectos
-├── proyectos_finales/        # Gimnasio y Titanic, de punta a punta
-├── config/                   # Instalación de paquetes y utilidades
-├── templates/                # Plantillas de análisis, reporte y dashboard
-└── documentacion/            # Notas y material de apoyo escrito
+├── 01_Introduccion_R/        # Cómo se escribe R
+├── 02_Manipulacion_Datos/    # Tablas, CSV y limpieza
+├── 03_Visualizacion/         # Gráficos, en plot/ y en graficos/
+├── 04_Modelado/              # Agrupar datos (clustering)
+├── 05_Analisis_Exploratorio/ # Describir un dataset antes de modelar
+├── datasets/                 # Los CSV de práctica
+├── proyectos_finales/        # Gimnasio y Titanic, ya escritos
+├── config/                   # Instala los paquetes
+├── templates/                # Moldes de reporte y tablero
+└── documentacion/            # Notas de apoyo
 ```
 
-Dentro de la introducción también están `condicionales.R`, `bucles.R`, los ejercicios progresivos y la guía de referencia rápida (`01_Introduccion_R/guia_referencia_rapida.md`).
+**01. Introducción.** Operaciones, variables, vectores, listas, factores, funciones, condicionales y bucles. Un vector guarda varios valores del mismo tipo: `c(140, 98, 121)`. Un factor es una categoría con opciones fijas, por ejemplo `"Si"` y `"No"`.
 
-### Qué se aprende en cada parte
+**02. Manipulación de datos.** Un data frame es la tabla de trabajo: cada fila es un caso y cada columna una variable. Aquí se leen CSV, se eligen columnas, se filtran filas y se crean columnas nuevas. `dplyr` nombra esos pasos (`filter`, `select`, `mutate`, `group_by`, `summarise`). `stringr` limpia texto y `lubridate` trabaja con fechas.
 
-**01. Introducción.** Cómo se escribe R: operaciones, variables, tipos de datos, vectores, matrices, listas, factores, funciones, condicionales y bucles. Un vector guarda varios valores del mismo tipo en una sola variable. Un factor es una categoría con niveles fijos, por ejemplo `"Si"` y `"No"`.
+**03. Visualización.** La carpeta `plot/` va de uno en uno: línea, barra, histograma, dispersión, caja, torta y la primera figura con `ggplot2`. `ggplot2` arma el gráfico por capas: los datos, qué variable va en cada eje (`aes`) y la forma (`geom_point`, `geom_col`, `geom_boxplot`). `plotly`, en `graficos/`, deja hacer zoom y ver el valor al pasar el cursor.
 
-**02. Manipulación de datos.** Un data frame es una tabla: filas como observaciones y columnas como variables. Aquí se leen CSV, se eligen columnas, se filtran filas y se crean variables nuevas. `dplyr` hace ese trabajo con verbos claros (`filter`, `select`, `mutate`, `group_by`, `summarise`). `stringr` limpia texto y `lubridate` trabaja con fechas.
+**04. Modelado.** `kmeans.r` agrupa filas parecidas entre sí. Esa técnica se llama clustering. El árbol de decisión, que clasifica casos, está en el proyecto del Titanic.
 
-**03. Visualización.** Primero los gráficos base de R (`plot`, `hist`, `barplot`). Después `ggplot2`, que arma un gráfico por capas: datos, estética (`aes`) y geometría (`geom_point`, `geom_col`, `geom_boxplot`). `plotly` convierte esos gráficos en figuras en las que se puede hacer zoom y ver valores al pasar el cursor.
+**05. Análisis exploratorio.** Antes de modelar se describe el dataset: medias, dispersión, distribuciones, valores atípicos y relaciones entre variables. A eso se le llama EDA.
 
-**04. Modelado.** Agrupar observaciones parecidas (clustering, por ejemplo k-means) y clasificar o predecir con árboles de decisión. El caso del Titanic, en `proyectos_finales/`, usa un árbol para estimar si un pasajero sobrevivió.
+**Proyectos finales.** Dos análisis cerrados, para leer cuando ya pasaste por gráficos y por el EDA.
 
-**05. Análisis exploratorio.** Antes de modelar se describe el dataset: medias, dispersión, distribuciones, valores atípicos y relaciones entre variables. Esa exploración se llama EDA.
+- `02 Proyecto Final Gimnasio.R` usa `datasets/gym_members_exercise_tracking.csv`: describe, correlaciona y grafica.
+- `03  Arbol de desición Titanic.R` ajusta un árbol para estimar si un pasajero sobrevivió.
 
-**Proyectos finales.** Dos análisis cerrados. El del gimnasio (`02 Proyecto Final Gimnasio.R`, con `datasets/gym_members_exercise_tracking.csv`) recorre descripción, correlaciones y gráficos. El del Titanic (`03  Arbol de desición Titanic.R`) ajusta y lee un árbol de decisión.
+En `templates/` hay tres archivos R Markdown (análisis, tablero y presentación) para pasar tu propio script a un documento.
 
-## Ruta de estudio
-
-Avanza en orden. Cada nivel supone el anterior. Una sesión corta y diaria rinde más que un maratón de un solo día: ejecuta el código, cambia un número o un filtro y vuelve a correrlo.
-
-| Nivel | Qué dominar | Dónde practicarlo | Listo cuando… |
-| --- | --- | --- | --- |
-| 1. Fundamentos | R frente a RStudio, aritmética, variables, tipos, vectores y funciones como `sum` y `mean` | `01_Introduccion_R/` | Completaste al menos tres scripts de `ejercicios_basicos/` |
-| 2. Datos | Data frames, `read.csv`, `head`, `str`, `summary`, filtros y columnas nuevas | `02_Manipulacion_Datos/` | Analizaste un CSV pequeño de `datasets/` |
-| 3. Gráficos | Dispersión, histograma, barras, y un `ggplot` con título y ejes | `03_Visualizacion/` | Hiciste cinco gráficos distintos y sabes qué pregunta responde cada uno |
-| 4. Estadística | Tendencia central, dispersión, correlación, valor *p* e intervalos | `05_Analisis_Exploratorio/` y `04_Modelado/` | Explicaste un resultado con tus palabras, no solo con el número |
-| 5. Proyecto | Pregunta, limpieza, EDA, gráfico, modelo y conclusión | `proyectos_finales/` | Entregaste un análisis con código comentado |
-
-Habilidades que suman después del recorrido: escribir funciones propias, usar R Markdown para un reporte, manejar fechas y valores faltantes, y guardar el trabajo con Git.
-
-Tres ritmos posibles:
-
-- **Dos a cuatro semanas.** Referencia rápida, ejercicios básicos y un gráfico con un CSV de ventas o del gimnasio. Cubres los niveles 1 y 2.
-- **Dos a tres meses.** El orden de las carpetas, un caso de cada bloque y uno de los proyectos finales.
-- **Un semestre.** Todo lo anterior, más un reporte en R Markdown y la lectura de *R for Data Science*.
-
-
-## Glosario breve
-
-Términos que aparecen en los scripts. Si uno se cruza en un ejercicio, la definición de aquí alcanza para seguir.
+## Palabras que aparecen en los scripts
 
 | Término | Significado |
 | --- | --- |
-| Objeto | Cualquier cosa que R guarda en memoria con un nombre: un número, un vector, una tabla. |
-| Variable | El nombre con el que recuperas ese objeto. Se asigna con `<-`. |
-| Vector | Una fila de valores del mismo tipo. `c(140, 98, 121)` es un vector numérico. |
+| Objeto | Lo que R guarda en memoria con un nombre: un número, un vector, una tabla. Lo ves en el entorno, arriba a la derecha. |
+| Variable | El nombre de ese objeto. Se crea con `<-`, como en `ventas <- c(140, 98, 121)`. |
+| Vector | Varios valores del mismo tipo en una sola variable. |
 | Matriz | Tabla en la que todas las celdas son del mismo tipo. |
-| Data frame | Tabla de análisis: cada fila es un caso y cada columna una variable, que puede ser de distinto tipo. |
-| Factor | Variable categórica con niveles definidos, útil en gráficos y modelos. |
-| Función | Código con nombre que recibe argumentos y devuelve un resultado. `mean(x)` es una función. |
-| Argumento | Valor que le pasas a una función. En `mean(x, na.rm = TRUE)`, `x` y `na.rm` son argumentos. |
-| Script | Archivo `.R` con el código. Se puede volver a ejecutar; la consola sola no deja ese registro. |
-| Paquete | Conjunto de funciones instalable desde CRAN, la red oficial de paquetes. Se carga con `library()`. |
-| Base R | Lo que ya viene con R, sin instalar nada más: `mean`, `plot`, `read.csv`. |
-| Tidyverse | Familia de paquetes que comparten una forma de trabajar: datos ordenados, verbos claros y el operador `%>%`. |
-| Pipe `%>%` | Pasa el resultado de la izquierda como primer argumento de la función de la derecha. Se lee "y luego". |
-| dplyr | Paquete del tidyverse para filtrar, elegir, crear columnas y resumir tablas. |
-| ggplot2 | Paquete para gráficos por capas, a partir de la gramática de gráficos. |
-| EDA | Análisis exploratorio: resumir y graficar un dataset para entenderlo antes de modelar. |
-| Estadística descriptiva | Números que resumen lo observado: media, mediana, mínimo, máximo, desviación. |
-| Histograma | Gráfico de la distribución de una variable numérica, en intervalos. |
-| Clustering | Agrupar filas parecidas entre sí sin una etiqueta previa. K-means es el método que más se usa al empezar. |
-| IDE | Entorno donde se programa. RStudio es el IDE habitual para R. |
-| String | Texto. En R va entre comillas. |
-| Tipo de dato | Clase del valor: numérico, carácter, lógico, factor, fecha. |
+| Data frame | Tabla de análisis. Las columnas pueden ser de distinto tipo. |
+| Factor | Categoría con niveles definidos. Sirve en gráficos y en modelos. |
+| Función | Una acción con nombre. `mean(x)` calcula el promedio de `x`. |
+| Argumento | Lo que le pasas a una función. En `mean(x, na.rm = TRUE)`, `na.rm = TRUE` le dice que ignore los huecos. |
+| Script | El archivo `.R`. Se puede volver a ejecutar. Lo que escribes solo en la consola se pierde al cerrar. |
+| Paquete | Un grupo de funciones que se instala desde CRAN y se activa con `library(dplyr)`. |
+| Base R | Lo que ya viene instalado: `mean`, `plot`, `read.csv`. No hace falta `library`. |
+| Tidyverse | La familia de paquetes que se usa en este curso para tablas y gráficos. |
+| Pipe `%>%` | Encadena pasos. Se lee "y luego": la tabla de la izquierda entra en la función de la derecha. |
+| dplyr | Filtra, elige columnas, crea columnas y resume tablas. |
+| ggplot2 | Gráficos por capas. |
+| EDA | Mirar y resumir los datos antes de proponer un modelo. |
+| Estadística descriptiva | Media, mediana, mínimo, máximo y desviación. |
+| Histograma | Cómo se reparte una variable numérica, en intervalos. |
+| Clustering | Juntar filas parecidas cuando todavía no hay una etiqueta de grupo. |
+| String | Un texto, siempre entre comillas. |
+| NA | Un dato que falta. No es un cero. Muchas funciones se detienen si no les dices qué hacer con él. |
 
-Hay una guía de comandos, más corta y orientada a copiar, en `01_Introduccion_R/guia_referencia_rapida.md`.
+## Datos para practicar
 
-## Datos de práctica
+Están en `datasets/`, en CSV. Ábrelos desde la raíz del material:
 
-Todos están en `datasets/`, en CSV. Varios traen valores faltantes a propósito, para practicar limpieza. Ábrelos con `read.csv("datasets/nombre.csv")` desde la raíz del proyecto.
+```r
+ventas <- read.csv("datasets/ventas_tienda.csv")
+head(ventas)     # las primeras filas
+str(ventas)      # el tipo de cada columna
+summary(ventas)  # un resumen numérico
+```
 
-| Archivo | Para qué sirve |
+`head` confirma que el archivo cargó. `str` dice si una columna es texto o número. `summary` da mínimo, mediana y máximo.
+
+| Archivo | Para qué usarlo |
 | --- | --- |
-| `ventas_tienda.csv` | Ventas por producto y categoría. Tendencias y gráficos de barras. |
-| `datos_medicos.csv` | Pacientes. Comparar grupos y ver factores de riesgo. |
-| `viviendas.csv` | Precio y características de viviendas. Regresión simple. |
-| `encuesta_satisfaccion.csv` | Respuestas de una encuesta. Frecuencias y categorías. |
-| `rendimiento_academico.csv` | Calificaciones y asistencia. Relación entre variables. |
-| `students_with_dates.csv` | Estudiantes con fechas. Práctica de `lubridate`. |
-| `gym_members_exercise_tracking.csv` | Socios de un gimnasio. Proyecto final y correlaciones. |
-| `census-retail.csv` | Censo de comercio. Limpieza y transformación. |
+| `ventas_tienda.csv` | Ventas por producto y categoría. Barras y tendencias. |
+| `datos_medicos.csv` | Pacientes. Comparar grupos. |
+| `viviendas.csv` | Precio y características de viviendas. |
+| `encuesta_satisfaccion.csv` | Respuestas de una encuesta. Conteos por categoría. |
+| `rendimiento_academico.csv` | Calificaciones y asistencia. |
+| `students_with_dates.csv` | Fechas, para practicar `lubridate`. |
+| `gym_members_exercise_tracking.csv` | El proyecto del gimnasio. |
+| `census-retail.csv` | Limpieza de un archivo más sucio. |
+| `BikeData.csv` | Otro conjunto para gráficos y exploración. |
 
-R también trae tablas de ejemplo sin descargar nada: `mtcars` (autos) e `iris` (flores). Sirven para probar un gráfico en dos líneas.
+Algunos CSV traen celdas vacías a propósito. En R esas celdas se leen como `NA`. R también trae dos tablas sin descargar nada, `mtcars` e `iris`, útiles para probar un gráfico en pocas líneas.
 
-## Proyectos para armar
+## Ideas de proyecto
 
-Cinco ejercicios largos, del más guiado al más abierto. Los tres primeros pueden apoyarse en los CSV de `datasets/`. Los dos últimos piden paquetes extra y, en el de texto, acceso a una API.
+Estos cinco no están escritos como script. Son encargos para hacer tú, cuando termines el orden de arriba. Los tres primeros usan CSV que sí están en `datasets/`.
 
-1. **Tablero de ventas.** Filtrar por categoría y fecha, ver la tendencia y el total por categoría. Practica `dplyr`, `ggplot2` y, si quieres ir más lejos, una app Shiny. Datos: `ventas_tienda.csv`.
-2. **Datos médicos.** Describir edad, IMC y colesterol, comparar grupos con diabetes o hipertensión y leer una matriz de correlación. Datos: `datos_medicos.csv`.
-3. **Precio de viviendas.** Separar entrenamiento y prueba, ajustar una regresión con `caret` y mirar el error (RMSE) y el ajuste (R²) en un gráfico de real contra predicho. Datos: `viviendas.csv`.
-4. **Sentimiento en texto.** Partir frases en palabras con `tidytext`, puntuar el tono y ver qué términos se repiten. Hace falta autenticación si los textos salen de una red social.
-5. **Recomendaciones.** Con una tabla de usuario, producto y calificación, sugerir lo que personas parecidas valoraron bien. Es el más largo: mide similitud y ordena sugerencias.
+1. **Ventas.** Con `ventas_tienda.csv`, filtra una categoría, suma el total y haz un gráfico de tendencia.
+2. **Datos médicos.** Con `datos_medicos.csv`, compara grupos y mira qué variables se mueven juntas.
+3. **Viviendas.** Con `viviendas.csv`, relaciona el precio con el tamaño u otra característica.
+4. **Texto.** Parte frases en palabras y cuenta cuáles se repiten. Pide paquetes que el curso base no usa.
+5. **Recomendaciones.** A partir de usuario, producto y calificación, sugiere productos parecidos. Es el más largo.
 
-Un proyecto queda cerrado cuando tiene pregunta, datos limpios, al menos un gráfico que responda esa pregunta y un párrafo de conclusión. Empieza por la versión pequeña (cargar, resumir, un gráfico) y solo después agrega el modelo o la app.
+Un encargo está cerrado cuando tiene una pregunta al inicio, los datos limpios, un gráfico que responde esa pregunta y un párrafo de conclusión al final. Empieza por cargar, resumir y graficar. El modelo va después.
 
-En `proyectos_finales/` ya hay dos análisis escritos: gimnasio y árbol del Titanic. Léelos después de los niveles 3 y 4, y compara tu estructura con la de esos scripts. Las plantillas de `templates/` sirven para pasar el mismo análisis a un reporte o a un tablero.
+Para ver cómo se ve un análisis ya cerrado, abre los dos scripts de `proyectos_finales/` después de los niveles 3 y 4.
 
-## R junto con otras herramientas
+## Después del curso
 
-R no tiene que hacer todo el flujo. Estas son las conexiones que más se usan, y el paquete con el que se hacen.
+Esta parte no hace falta para aprobar los ejercicios. Sirve cuando ya lees un script sin detenerte en cada línea y quieres conectar R con otra herramienta.
 
-| Quieres… | Paquete | Idea |
-| --- | --- | --- |
-| Llamar a Python desde R | `reticulate` | `r_to_py()` y `py_to_r()` convierten tablas entre los dos lenguajes. |
-| Compartir una tabla con otro programa | `readr` o `writexl` | Un CSV o un Excel lo abre Python, Power BI o Tableau. |
-| Consultar una base de datos | `DBI` más el driver (`RSQLite`, `RPostgres`, `RMariaDB`) | Te conectas, corres un `SELECT` y el resultado llega como data frame. SQLite es un solo archivo, útil para practicar. |
-| Leer una API | `httr` y `jsonlite` | Pides la URL y conviertes el JSON en una lista o tabla de R. |
-| Leer una hoja de cálculo en la nube | `googlesheets4` | Lees y escribes una Google Sheet con la cuenta de Google. |
-| Publicar un gráfico interactivo | `shiny` | Una interfaz (botones, filtros) y un servidor que recalcula el gráfico. |
-| Dejar un reporte | `rmarkdown` | Un archivo que mezcla texto y código y se exporta a HTML, PDF o Word. |
-| Ofrecer una función por HTTP | `plumber` | El script de R se vuelve un endpoint que otro sistema puede llamar. |
-| Guardar versiones del análisis | Git | Cada commit deja registrado qué cambió y por qué. RStudio trae panel de Git. |
-| Correr el mismo análisis en otro equipo | Docker, imagen `rocker/tidyverse` | El contenedor lleva R y los paquetes, así el resultado no depende de tu instalación. |
-| Programar una corrida diaria | Programador de tareas de Windows, cron o GitHub Actions | El sistema ejecuta `Rscript tu_analisis.R` a la hora que indiques. |
+| Quieres… | Cómo se hace en R |
+| --- | --- |
+| Pasar una tabla a Excel, Python o Power BI | Guárdala en CSV. El otro programa la abre. |
+| Leer una base de datos | El paquete `DBI`, con `RSQLite` si la base es un solo archivo. El resultado llega como data frame. |
+| Pedir datos a una página | `httr` y `jsonlite` leen una dirección web y convierten la respuesta en tabla. |
+| Publicar un gráfico con filtros | `shiny`: una pantalla con controles y un gráfico que se recalcula. |
+| Entregar un reporte | `rmarkdown` mezcla texto y código y lo exporta a HTML, PDF o Word. Las plantillas están en `templates/`. |
+| Guardar el historial de cambios | Git, desde el panel de RStudio. Cada commit anota qué cambió. |
 
-Para intercambiar datos, el camino más simple sigue siendo un CSV:
+El intercambio más simple es un CSV:
 
 ```r
 write.csv(mtcars, "mtcars.csv", row.names = FALSE)
 datos <- read.csv("mtcars.csv")
 ```
 
-La integración sale bien cuando el paso de R está claro (limpiar, resumir, graficar o modelar) y el otro programa solo consume ese resultado.
+Cuando un ejercicio se quede corto:
 
-## Para seguir aprendiendo
+- [R for Data Science](https://r4ds.had.co.nz/), gratis, en el mismo orden que este material: datos, gráficos y modelos.
+- [R Programming](https://www.coursera.org/learn/r-programming), de Johns Hopkins, en Coursera.
+- Hojas de una página: [R en español](https://rstudio.github.io/cheatsheets/translations/spanish/r-base-espanol.pdf), [dplyr](https://dplyr.tidyverse.org/) y [ggplot2](https://ggplot2.tidyverse.org/).
+- Para preguntar: [RStudio Community](https://community.rstudio.com/) y [Stack Overflow, etiqueta r](https://stackoverflow.com/questions/tagged/r). Incluye qué hiciste, qué esperabas y el mensaje de error completo.
+- Para practicar con datos nuevos cada semana: [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).
+- En YouTube, StatQuest explica la estadística con calma. En español, los canales de ciencia de datos de Latam cubren tidyverse y gráficos.
 
-Cuando un ejercicio de este material se quede corto, estas fuentes están ordenadas como el propio curso.
+Textos de fondo, por si un docente los pide: Wickham (2014), *Tidy Data*, Journal of Statistical Software; Wickham (2016), *ggplot2*, Springer; Wilkinson (2005), *The Grammar of Graphics*, Springer; Kabacoff, *R in Action*, Manning.
 
-**Para empezar**
+## Para probar que ya quedó instalado
 
-- [R for Data Science](https://r4ds.had.co.nz/), de Hadley Wickham y Garrett Grolemund. El libro de cabecera, gratis, en el mismo orden: datos, gráficos y modelos.
-- [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r) en DataCamp, y [R Programming](https://www.coursera.org/learn/r-programming) de Johns Hopkins en Coursera.
-- Hojas de una página: [R](https://rstudio.github.io/cheatsheets/translations/spanish/r-base-espanol.pdf), [dplyr](https://dplyr.tidyverse.org/), [ggplot2](https://ggplot2.tidyverse.org/) y [R Markdown](https://rmarkdown.rstudio.com/).
+Pega esto en un script nuevo, guarda el archivo dentro de la carpeta del material y ejecútalo con Ctrl + Enter, línea a línea.
 
-**Para profundizar**
+```r
+ventas <- c(140, 98, 121, 201, 213)
+names(ventas) <- c("Lunes", "Martes", "Miércoles", "Jueves", "Viernes")
 
-- [Advanced R](https://adv-r.hadley.nz/), de Hadley Wickham, cuando quieras entender cómo funciona el lenguaje.
-- *R Graphics Cookbook*, de Winston Chang, para un gráfico concreto que aún no sabes construir.
-- *Mastering Shiny*, de Hadley Wickham, cuando pases del script a una aplicación.
+mean(ventas)
+sum(ventas)
 
-**Dónde preguntar y dónde mirar código**
+barplot(ventas,
+        main = "Venta de lápices",
+        ylab = "Unidades",
+        col = "steelblue")
+```
 
-- [RStudio Community](https://community.rstudio.com/) y [Stack Overflow, etiqueta r](https://stackoverflow.com/questions/tagged/r).
-- [R-bloggers](https://www.r-bloggers.com/) y el resumen semanal [R Weekly](https://rweekly.org/).
-- [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday): un dataset nuevo cada semana para practicar.
-- [CRAN Task Views](https://cran.r-project.org/web/views/) agrupa paquetes por tema. La documentación de cada función está en [rdocumentation.org](https://www.rdocumentation.org/).
-
-**Referencias que citan los textos del curso**
-
-- Wickham, H. (2014). *Tidy Data*. Journal of Statistical Software, 59(10). La idea de tabla ordenada que usa todo el tidyverse.
-- Wickham, H. (2016). *ggplot2: Elegant Graphics for Data Analysis*. Springer.
-- Wilkinson, L. (2005). *The Grammar of Graphics*. Springer. La base de ggplot2.
-- Kabacoff, R. I. *R in Action*. Manning. Recorrido amplio de análisis con R.
-
-En YouTube, StatQuest explica la estadística con calma. En español, los canales de ciencia de datos de Latam cubren tidyverse y gráficos. El buscador de paquetes y la ayuda `?funcion` resuelven más dudas que un tutorial genérico: la pregunta útil incluye qué hiciste, qué esperabas y el mensaje de error completo.
-
+Si el promedio aparece en la consola y el gráfico de barras aparece en **Plots**, la instalación está lista. El mismo ciclo (guardar, resumir, mostrar) es el de todo el material.
