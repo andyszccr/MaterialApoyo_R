@@ -8,38 +8,29 @@
 a <- 150
 b <- 225
 
-# Condicional if simple
-# Se ejecuta solo si la condición es verdadera
+# Condicional if/else
+# Si a es mayor que b, imprime "a is greater than b"
+# De lo contrario, imprime "b is greater than a"
 if (a > b) {
   print("a is greater than b")
-}
-
-# Nota: como a (150) no es mayor que b (225), el bloque if no se ejecuta
-# y no se imprime nada en consola.
-
-# =============================================================================
-# Variante con if/else para cubrir ambos casos
-# =============================================================================
-
-if (a > b) {
-  print("a es mayor que b")
 } else {
-  print("b es mayor o igual que a")
+  print("b is greater than a")
 }
 
-# Resultado esperado: "b es mayor o igual que a"
+# Resultado esperado: "b is greater than a"
+# (porque 150 no es mayor que 225)
 
 # =============================================================================
-# Otro ejemplo con valores donde a > b
+# Otro ejemplo con valores donde la primera condicion se cumple
 # =============================================================================
 
 x <- 300
 y <- 150
 
 if (x > y) {
-  print("x es mayor que y")
+  print("x is greater than y")
 } else {
-  print("y es mayor o igual que x")
+  print("y is greater than x")
 }
 
-# Resultado esperado: "x es mayor que y"
+# Resultado esperado: "x is greater than y"
