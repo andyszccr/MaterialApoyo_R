@@ -43,3 +43,15 @@ print(find_square(5))
 
 # Resultado esperado en consola:
 # [1] 25
+
+find_cube <- function(x) {
+  return(x * x * x)
+}
+
+print(find_square(7))
+
+print(find_cube(10))
+
+# Resultado esperado en consola:
+# [1] 49
+# [1] 1000
