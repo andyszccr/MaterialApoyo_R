@@ -50,3 +50,20 @@ while(i >= 1) {
 # [1] 86
 # [1] 85
 # (el bucle se detiene en 85 gracias al break)
+
+# =============================================================================
+# Ejemplo con for loop
+# =============================================================================
+
+# For loop in R
+# Iterating through a list of elements
+cars <- list("Tesla", "BMW", "Ferrari")
+
+for (x in cars) {
+  print(x)
+}
+
+# Resultado esperado en consola:
+# [1] "Tesla"
+# [1] "BMW"
+# [1] "Ferrari"
