@@ -6,7 +6,7 @@
 # Se usa para agrupar resultados, configuraciones, registros, etc.
 #
 # Nota sobre los "vectores" en R:
-#   - vector atómico  (c())  -> todos los elementos del MISMO tipo
+#   - vector atomico  (c())  -> todos los elementos del MISMO tipo
 #   - lista           (list()) -> cada elemento puede ser de tipo distinto
 # =====================================================================
 
@@ -33,7 +33,7 @@ mi_lista <- list(
   numeros  = c(1, 2, 3, 4, 5),    # vector numérico
   texto    = "Hola, soy una lista", # texto
   booleano = FALSE,                # lógico
-  vacio    = NULL,                 # valor vacío
+  vacío    = NULL,                 # valor vacío
   otro     = list(a = 1, b = 2)    # lista DENTRO de una lista
 )
 
@@ -46,13 +46,13 @@ persona[["nombre"]]
 persona[1]               # Mantiene la lista (sublista)
 persona[["edad"]]        # Devuelve el valor, no la lista
 
-# Acceder a un vector que estĂ¡ dentro de la lista
+# Acceder a un vector que está dentro de la lista
 mi_lista$numeros
 mi_lista$numeros[2]      # segundo elemento del vector "numeros"
 
 # 5) Longitud y tamaño ----------------------------------------------------
-length(mi_lista)         # nĂºmero de elementos
-length(persona)          # tambiĂ©n sirve para listas
+length(mi_lista)         # número de elementos
+length(persona)          # también sirve para listas
 
 # 6) Modificar o añadir elementos -----------------------------------------
 persona$edad <- 31                  # actualizar
@@ -63,11 +63,11 @@ print(persona)
 
 # 7) Listas anidadas ------------------------------------------------------
 agenda <- list(
-  semana = c("lunes", "martes", "miĂ©rcoles"),
+  semana = c("lunes", "martes", "miércoles"),
   tareas = list(
     lunes    = c("Estudiar R", "Hacer gimnasio"),
     martes   = "Leer un libro",
-    miercoles = NULL
+    miércoles = NULL
   ),
   metadatos = list(fecha_creacion = "2026-04-01", creado_por = "Ana")
 )
@@ -79,7 +79,7 @@ agenda$tareas$martes
 agenda$metadatos$fecha_creacion
 
 # 8) Diferencia entre vector y lista --------------------------------------
-# VECTOR atĂłmico: elementos del MISMO tipo
+# VECTOR atómico: elementos del MISMO tipo
 vector <- c(1, 2, 3)
 vector_texto <- c("a", "b", "c")
 
@@ -106,11 +106,11 @@ vector_como_lista <- as.list(vector)
 
 # 11) Funciones útiles ----------------------------------------------------
 is.list(mi_lista)      # TRUE
-is.vector(mi_lista)    # FALSE (una lista NO es un vector atĂłmico)
+is.vector(mi_lista)    # FALSE (una lista NO es un vector atómico)
 names(mi_lista)        # nombres de los elementos
 
 # 12) Iterar sobre una lista -----------------------------------------------
-# lapply aplica una funciĂłn a cada elemento y devuelve una lista
+# lapply aplica una función a cada elemento y devuelve una lista
 lapply(mi_lista$numeros, function(x) x * 2)
 
 # sapply simplifica el resultado si es posible
